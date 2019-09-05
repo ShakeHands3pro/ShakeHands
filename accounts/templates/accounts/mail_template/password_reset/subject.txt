@@ -1,0 +1,1 @@
+ShakeHandsよりパスワード再設定用URLの送信
