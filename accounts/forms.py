@@ -8,6 +8,7 @@ from .models import (
     UserSetting
 )
 
+
 User = get_user_model()
 
 
