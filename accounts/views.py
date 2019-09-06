@@ -92,7 +92,6 @@ class UserCreatesetting(generic.View):
 
 
     def get(self, request, **kwargs):
-        """tokenが正しければ本登録."""
         return render(request,self.template_name,{'form':self.form_class})
 
 
@@ -132,6 +131,23 @@ class UserCreateComplete(LoginRequiredMixin,generic.TemplateView):
     """ユーザー本登録したよ"""
     template_name = 'accounts/signup_complete.html'
 
+class UserSettingUpdate(LoginRequiredMixin,generic.UpdateView):
+    template_name = 'accounts/signup_setting.html'
+    form_class = UserSettingForm
+    model = UserSetting
+    success_url = reverse_lazy('accounts:signup_complete')
+    def get_object(self):
+        obj=UserSetting.objects.get(user=self.request.user)
+        return obj
+    def get_context_data(self, **kwargs):
+        context = super(UserSettingUpdate, self).get_context_data(**kwargs)
+        settings = UserSetting.objects.get(user=self.request.user)
+        if settings.icon_pic:
+            context.update({
+                'icon_now':settings.icon_pic,
+            })
+        return context
+        
 
 
 

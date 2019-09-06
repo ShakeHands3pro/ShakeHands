@@ -1,16 +1,26 @@
 {% extends "accounts/base.html" %}
 {% block content %}
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    {% for field in form %}
-    <div class="form-group">
-        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
-        {{ field }}
-        {{ field.errors }}
-    </div>
-    {% endfor %}
 
+    <div class="form-group">
+        <label for="{{ form.graduation_year.id_for_label }}">{{form.graduation_year.label_tag}}</label>
+        {{ form.graduation_year }}{{ form.graduation_year.errors }}
+
+        <label for="{{ form.display_name.id_for_label }}">{{form.display_name.label_tag}}</label>
+        {{ form.display_name }}{{ form.display_name.errors }}
+        
+        <label for="{{ form.course.id_for_label }}">{{form.course.label_tag}}</label>
+        {{form.course}}{{ form.course.errors }}
+
+        <label for="{{ form.icon_pic.id_for_label }}">{{form.icon_pic.label_tag}}</label>
+        <br>
+        <img src="{{icon_now.url}}" width="200"/>
+        <input type="file" name="{{form.icon_pic.name}}" accept="image/*" class="form-control" id="id_icon_pic">
+        {{ form.icon_pic.errors }}
+    </div>
+ 
     <button type="submit" class="btn btn-primary btn-lg">本登録</button>
 </form>
 {% endblock %}

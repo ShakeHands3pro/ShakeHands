@@ -23,8 +23,6 @@ class LoginForm(AuthenticationForm):
 
 
 
-
-
 class UserCreateForm(UserCreationForm):
     """ユーザー登録用フォーム"""
 
