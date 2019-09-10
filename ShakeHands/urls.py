@@ -19,6 +19,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace = 'accounts')),
+    path('questionBox/', include('questionBoxes.urls', namespace = 'qBox')),
 ]
 
 # 以下、media用の定義

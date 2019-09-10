@@ -147,7 +147,6 @@ class UserSettingUpdate(LoginRequiredMixin,generic.UpdateView):
                 'icon_now':settings.icon_pic,
             })
         return context
-        
 
 
 

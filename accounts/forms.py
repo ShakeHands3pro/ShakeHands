@@ -60,6 +60,7 @@ COURSE_CHOICES=(
     ('5','情報科学科'),
     ('6','総合政策学科'),
 )
+"""
 class UserSettingForm(forms.ModelForm):
     #メールアドレス認証後の設定form
 
@@ -78,6 +79,43 @@ class UserSettingForm(forms.ModelForm):
             'display_name',
             'icon_pic',
         )
+"""
+class UserSettingForm(forms.ModelForm):
+    #メールアドレス認証後の設定form
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['display_name'].required = False
+        self.fields['icon_pic'].required = False
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+    class Meta:
+        model = UserSetting
+        fields = (
+            'graduation_year',
+            'course',
+            'display_name',
+            'icon_pic',
+            'x', 'y', 'width', 'height', 
+        )
+    
+    def save(self):
+        icon=super(UserSettingForm,self).save()
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+
+        image = Image.open(icon.icon_pic)
+        cropped_image = image.crop((x, y, w+x, h+y))
+        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+        resized_image.save(icon.icon_pic.path)
+        return icon
 
 class MyPasswordResetForm(PasswordResetForm):
     """パスワード忘れたときのフォーム"""
