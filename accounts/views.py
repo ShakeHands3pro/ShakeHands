@@ -163,8 +163,9 @@ class iconPic_change(LoginRequiredMixin,generic.TemplateView):
         return redirect('accounts:iconSetting')
     def get(self, request, **kwargs):
         settings = UserSetting.objects.get(user=self.request.user)
-        return render(request,self.template_name,{'form':self.form,'icon_now':settings.icon_pic})
-        
+        if settings.icon_pic:
+            return render(request,self.template_name,{'form':self.form,'icon_now':settings.icon_pic})
+        return render(request,self.template_name,{'form':self.form})
 
 
 
