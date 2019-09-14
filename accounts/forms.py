@@ -7,6 +7,8 @@ from django.contrib.auth import get_user_model
 from .models import (
     UserSetting
 )
+from PIL import Image
+from django.core.files import File
 
 
 User = get_user_model()
@@ -20,8 +22,6 @@ class LoginForm(AuthenticationForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label  # placeholderにフィールドのラベルを入れる
-
-
 
 
 
@@ -68,7 +68,6 @@ class UserSettingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['display_name'].required = False
-        self.fields['icon_pic'].required = False
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
@@ -78,7 +77,6 @@ class UserSettingForm(forms.ModelForm):
             'graduation_year',
             'course',
             'display_name',
-            'icon_pic',
         )
 
 class MyPasswordResetForm(PasswordResetForm):
@@ -97,3 +95,29 @@ class MySetPasswordForm(SetPasswordForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+class iconChangeForm(forms.ModelForm):
+    x = forms.FloatField(widget=forms.HiddenInput())
+    y = forms.FloatField(widget=forms.HiddenInput())
+    width = forms.FloatField(widget=forms.HiddenInput())
+    height = forms.FloatField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = UserSetting
+        fields = ('icon_pic','x','y','width','height',)
+
+    def save(self):
+        icon = super(iconChangeForm,self).save()
+
+        x = self.cleaned_data.get('x')
+        y = self.cleaned_data.get('y')
+        w = self.cleaned_data.get('width')
+        h = self.cleaned_data.get('height')
+        width = w if (w<=h) else h
+
+        image = Image.open(icon.icon_pic)
+        RectImage = image.crop((x*8,y*8,(width+x)*8,(width+y)*8))
+        resizedImage = RectImage.resize((200,200),Image.ANTIALIAS)
+        resizedImage.save(icon.icon_pic.path)
+
+        return icon

@@ -21,3 +21,12 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace = 'accounts')),
     path('',include('mypage.urls', namespace ='mypage')),
 ]
+
+# 以下、media用の定義
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
