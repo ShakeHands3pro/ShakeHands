@@ -258,7 +258,7 @@ class internshipRec_update(LoginRequiredMixin, generic.UpdateView):
     template_name="mypage/createOrUpdate.html"
     success_url=reverse_lazy('mypage:jobhunting_setting')
     def get_object(self):
-        obj=internshipRecommendation.objects.get(auto_increment_id=self.kwargs['id'])
+        obj=internshipRecommendation.objects.get(id=self.kwargs['id'])
         if obj.user==self.request.user:
             return obj
         raise Http404
@@ -274,7 +274,7 @@ class prospectiveEmployer_update(LoginRequiredMixin, generic.UpdateView):
     template_name="mypage/createOrUpdate.html"
     success_url=reverse_lazy('mypage:jobhunting_setting')
     def get_object(self):
-        obj=prospectiveEmployer.objects.get(auto_increment_id=self.kwargs['id'])
+        obj=prospectiveEmployer.objects.get(id=self.kwargs['id'])
         if obj.user==self.request.user:
             return obj
         raise Http404
@@ -290,7 +290,7 @@ class internshipRec_delete(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('mypage:jobhunting_setting')
     template_name = "mypage/confirmDel.html"
     def get_object(self):
-        obj=internshipRecommendation.objects.get(auto_increment_id=self.kwargs['id'])
+        obj=internshipRecommendation.objects.get(id=self.kwargs['id'])
         if obj.user==self.request.user:
             return obj
         raise Http404
@@ -306,7 +306,7 @@ class prospectiveEmployer_delete(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('mypage:jobhunting_setting')
     template_name="mypage/confirmDel.html"
     def get_object(self):
-        obj=prospectiveEmployer.objects.get(auto_increment_id=self.kwargs['id'])
+        obj=prospectiveEmployer.objects.get(id=self.kwargs['id'])
         if obj.user==self.request.user:
             return obj
         raise Http404
