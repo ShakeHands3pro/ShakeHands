@@ -90,10 +90,10 @@
   </tr>
   <tr>
     <td>
-        <a href="{% url 'mypage:jobhunting_internRec_update' %}">edit</a>
+        <a href="{% url 'mypage:jobhunting_internRec_update' id=field.id %}">edit</a>
     </td>
     <td>
-        <a href="{% url 'mypage:jobhunting_internRec_delete' %}">delete</a>
+        <a href="{% url 'mypage:jobhunting_internRec_delete' id=field.id %}">delete</a>
     </td>
   </tr>
 </table>
@@ -124,10 +124,10 @@
   </tr>
   <tr>
     <td>
-      <a href="{% url 'mypage:jobhunting_prospectiveEmployer_update' %}">edit</a>
+      <a href="{% url 'mypage:jobhunting_prospectiveEmployer_update' id=field.id %}">edit</a>
     </td>
     <td>
-      <a href="{% url 'mypage:jobhunting_prospectiveEmployer_delete' %}">delete</a>
+      <a href="{% url 'mypage:jobhunting_prospectiveEmployer_delete' id=field.id %}">delete</a>
     </td>
   </tr>
 </table>
