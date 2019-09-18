@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup',#画像ファイルが投稿削除とともに消されるようにするもの。独自追加
     'accounts',
+    'mypage',
 ]
 
 MIDDLEWARE = [
