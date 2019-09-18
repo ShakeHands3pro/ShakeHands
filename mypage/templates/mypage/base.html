@@ -25,6 +25,15 @@
           <li>
             <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">ログアウト</a>
           </li>
+          <li>
+              <a class="nav-item nav-link" href="{% url 'mypage:univlife_setting' %}">学生生活情報を更新する</a>
+          </li>
+          <li>
+              <a class="nav-item nav-link" href="{% url 'accounts:iconSetting' %}">アイコン画像を変更する</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'mypage:jobhunting_setting' %}">就活情報を更新する</a>
+          </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-item nav-link" href="{% url 'accounts:login' %}">

@@ -90,10 +90,11 @@ class prospectiveEmployer(models.Model):
 ______________友達＿＿＿＿＿＿＿＿＿＿＿
 ＊友達モデル
 """
+"""
 class myfriend(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='user')
     friend = models.ForeignKey(User, on_delete = models.CASCADE, related_name='friend')
-
+"""
 
 
 
@@ -101,14 +102,14 @@ class myfriend(models.Model):
 
 
 """
-______________学生生活＿＿＿＿＿＿＿＿＿＿＿
+_______________学生生活＿＿＿＿＿＿＿＿＿＿＿
 ＊所属団体モデル
 ＊OpenQuestionモデル
 ＊OpenQuestion回答モデル
 """
 class club(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    implessions = models.CharField("団体名", max_length=60,blank=True)
+    club_name = models.CharField("団体名", max_length=60,blank=True)
     post_date = models.DateTimeField("最終更新日", auto_now= True)
 
 class openQ(models.Model):
@@ -119,4 +120,7 @@ class openQ(models.Model):
 class openQ_ans(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     openQ = models.ForeignKey(openQ, on_delete=models.PROTECT)
+    ans = models.TextField("回答",max_length=1000)
     post_date = models.DateTimeField("最終更新日", auto_now= True)
+    def __str__(self):
+        return self.ans
