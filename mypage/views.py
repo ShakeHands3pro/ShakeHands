@@ -119,7 +119,7 @@ class updateOpenQ(LoginRequiredMixin, generic.UpdateView):
 
 class deleteClub(LoginRequiredMixin, generic.DeleteView):
     model = club
-    template_name = 'mypage/comfirmDel.html'
+    template_name = 'mypage/confirmDel.html'
     success_url = reverse_lazy('mypage:univlife_setting')
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -137,7 +137,7 @@ class deleteClub(LoginRequiredMixin, generic.DeleteView):
 
 class deleteOpenQ(LoginRequiredMixin, generic.DeleteView):
     model = openQ_ans
-    template_name = 'mypage/comfirmDel.html'
+    template_name = 'mypage/confirmDel.html'
     success_url = reverse_lazy('mypage:univlife_setting')
     def form_valid(self, form):
         form.instance.user = self.request.user
