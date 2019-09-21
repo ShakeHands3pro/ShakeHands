@@ -35,7 +35,7 @@ class Login(LoginView):
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('accounts:signup_complete')
+            return redirect('mypage:top')
         else:
             return super().post(request, *args, **kwargs)
 

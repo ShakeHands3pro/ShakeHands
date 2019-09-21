@@ -17,7 +17,7 @@
 <body>
     <!-- ナビバー -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'accounts:login' %}">ShakeHands</a>
+      <a class="navbar-brand" href="{% url 'mypage:top' %}">ShakeHands</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,11 +31,24 @@
           <li>
             <a class="nav-item nav-link" href="{% url 'accounts:accountsSetting' %}">アカウント情報を更新する</a>
           </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'accounts:iconSetting' %}">アイコン画像を変更する</a>
+          </li>
+          <li>
+                <a class="nav-item nav-link" href="{% url 'mypage:univlife_setting' %}">学生生活情報を更新する</a>
+            </li>
+            <li>
+                    <a class="nav-item nav-link" href="{% url 'mypage:jobhunting_setting' %}">就活情報を更新する</a>
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="{% url 'mypage:profile' id=user.pk %}">自分のプロフィールを確認する</a>
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="{% url 'mypage:alluser_list' %}">ユーザ一覧</a>
+                  </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-item nav-link" href="{% url 'accounts:login' %}">
-            ログイン
-          </a>
+            <a class="nav-item nav-link" href="{% url 'accounts:login' %}">ログイン</a>
           </li>
           {% endif %}
         </ul>

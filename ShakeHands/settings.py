@@ -132,7 +132,7 @@ STATICFILES_DIRS=(
 AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_URL = 'accounts:login'  # ログインするページ。デフォルトにするなら"/admin/login/"等も
-LOGIN_REDIRECT_URL = 'accounts:signup_complete'  
+LOGIN_REDIRECT_URL = 'mypage:top'  
 # ログインページに直接飛んだとき、ログイン完了後のリダイレクト先、
 # これ書いておかないと/profileという存在しないページにリダイレクトされて404エラーが出ます
 
