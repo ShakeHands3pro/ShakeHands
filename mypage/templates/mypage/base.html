@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="ja">
 <head>
@@ -8,6 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    {% block class %}{% endblock %}
 
     <title>ログイン</title>
 </head>
@@ -34,6 +37,12 @@
           <li>
             <a class="nav-item nav-link" href="{% url 'mypage:jobhunting_setting' %}">就活情報を更新する</a>
           </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'mypage:profile' id=user.pk %}">自分のプロフィールを確認する</a>
+          </li>
+          <li>
+            <a class="nav-item nav-link" href="{% url 'mypage:alluser_list' %}">ユーザ一覧</a>
+          </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-item nav-link" href="{% url 'accounts:login' %}">
@@ -46,7 +55,8 @@
     </nav>
 
     <!-- メインコンテント -->
-    <div class="container mt-3">
+    <!-- class="container mt-3" -->
+    <div>
         {% block content %}{% endblock %}
     </div>
 

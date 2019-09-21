@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from .models import (
     club, openQ, openQ_ans,
     jobHunting_requestment, jobHunting_startTime,
-    internshipRecommendation, prospectiveEmployer
+    internshipRecommendation, prospectiveEmployer,
+    myfriend
 )
 
 User=get_user_model()
@@ -124,3 +125,20 @@ class prospectiveEmployer_form(forms.ModelForm):
             'occupation',
             'company_name',
         )
+
+class myfriend_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(myfriend_form, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+    class Meta:
+        model = myfriend
+        fields = (
+            'user',
+            'friend',
+        )
+    def save(self):
+        friend = super(myfriend_form,self).save()
+        print(self)
+        return friend
+

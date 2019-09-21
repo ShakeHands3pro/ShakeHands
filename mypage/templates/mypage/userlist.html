@@ -1,0 +1,22 @@
+{% extends 'mypage/base.html' %}
+
+{% block content %}
+    {% for user in users %}
+        <div>
+            {% if user.icon_pic %}
+                <img src="{{user.icon_pic.url}}" class="col-xs-3">
+            {% endif %}
+            <div class ="col-xs-9">
+                <div class=profile_txt>
+                    {% if user.display_name %}
+                        <a href="{% url 'mypage:profile' id=user.user.pk %}">{{ user.display_name }}</a>
+                    {% else %}
+                        <a href="{% url 'mypage:profile' id=user.user.pk %}">{{ user.user.name }}</a>
+                    {% endif %}
+                    <a>{{ user.graduation_year }}年度卒業予定</a><br>
+                    <a>{{ user.get_course_display }}学科</a><br>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -6,7 +6,8 @@ from .models import (
     club, openQ_ans, openQ,
     industry, occupation, prospectiveEmployer,
     jobHunting_startTime, jobHunting_requestment,
-    internshipRecommendation
+    internshipRecommendation,
+    myfriend
 )
 
 # Register your models here.
@@ -28,6 +29,9 @@ class jobHunting_requestmentAdmin(admin.ModelAdmin):
 class jobHunting_startTimeAdmin(admin.ModelAdmin):
     fields = ['season']
 
+class friendAdmin(admin.ModelAdmin):
+    fields=['user','friend']
+
 
 
 admin.site.register(club,clubAdmin)
@@ -38,3 +42,4 @@ admin.site.register(occupation, occupationAdmin)
 admin.site.register(prospectiveEmployer, prospectiveEmployerAdmin)
 admin.site.register(jobHunting_requestment, jobHunting_requestmentAdmin)
 admin.site.register(jobHunting_startTime,jobHunting_startTimeAdmin)
+admin.site.register(myfriend, friendAdmin)

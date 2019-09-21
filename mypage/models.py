@@ -90,11 +90,10 @@ class prospectiveEmployer(models.Model):
 ______________友達＿＿＿＿＿＿＿＿＿＿＿
 ＊友達モデル
 """
-"""
 class myfriend(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='user')
     friend = models.ForeignKey(User, on_delete = models.CASCADE, related_name='friend')
-"""
+
 
 
 

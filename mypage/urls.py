@@ -26,4 +26,8 @@ urlpatterns = [
     path('setting/jobhunting/prospectiveEmployer/create',views.prospectiveEmployer_create.as_view(), name='jobhunting_prospectiveEmployer_create'),
     path('setting/jobhunting/prospectiveEmployer/update/<uuid:id>',views.prospectiveEmployer_update.as_view(), name='jobhunting_prospectiveEmployer_update'),
     path('setting/jobhunting/prospectiveEmployer/delete/<uuid:id>',views.prospectiveEmployer_delete.as_view(), name='jobhunting_prospectiveEmployer_delete'),
+
+    #プロフィールページ
+    path('profile/<uuid:id>',views.profilePage.as_view(),name='profile'),
+    path('search/all',views.allUser_list.as_view(),name='alluser_list'),
 ]
