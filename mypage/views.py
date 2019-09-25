@@ -410,7 +410,7 @@ def get_display_name(user):
     displayname = UserSetting.objects.get(user=user).display_name
     if displayname:
         return displayname
-    return user.name
+    return user.get_full_name()
 
 def get_friendState(login_user,theOther):
     is_follow=myfriend.objects.filter(user=login_user, friend=theOther)
@@ -434,7 +434,8 @@ class allUser_list(LoginRequiredMixin, generic.TemplateView):
         usersettings=UserSetting.objects.exclude(user=self.request.user)
         context.update({
             'users':usersettings,
-        })       
+        })
+        print(context)      
         return context
     def get(self, request, *args, **kwargs):
         return super(allUser_list, self).get(request, *args, **kwargs)
