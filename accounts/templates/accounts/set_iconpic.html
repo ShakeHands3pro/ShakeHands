@@ -35,8 +35,10 @@
                 aspectRatio: 1/1,
                 minCropBoxWidth: 200,
                 minCropBoxHeight: 200,
+                responsive:true,
+                restore:true,
                 ready: function () {
-                //should ser crop box data first here
+                //should set crop box data first here
                 cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
                 }
             });
@@ -49,6 +51,7 @@
         /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
         $(".js-crop-and-upload").click(function () {
             var cropData = cropper.getCropBoxData();
+            console.log(cropData)
             $("#id_x").val(cropData["left"]);
             $("#id_y").val(cropData["top"]);
             $("#id_height").val(cropData["height"]);
