@@ -1,0 +1,15 @@
+.card{
+    background-color: #fff;
+    border: 0px;
+}
+.login_form{
+    margin-left: 15vw;
+    margin-right: 15vw;
+    border-style: solid;
+    border-color: #e2e2e2;
+}
+
+.elsebuttons{
+    margin-left: 15vw;
+    margin-right: 15vw;
+}

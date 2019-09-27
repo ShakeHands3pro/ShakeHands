@@ -1,0 +1,47 @@
+.mydrawer_setting {
+    filter:alpha(opacity=85);
+    -moz-opacity: 0.85;
+    opacity: 0.85;
+    background-color: #4aabc4; 
+    color: #d0eae8;
+}
+.text-body{
+    color: #d0eae8!important;
+}
+.drawer_top{/*ShakeHandsのところ*/
+    margin: 20px;
+}
+.drawer-dropdown-menu-item{
+    color: #d0eae8;
+}
+.card{
+    background-color: #4aabc4;
+    border: 0px;
+}
+.mycard-header{
+    padding: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem; 
+    margin-bottom: 0;
+}
+
+.drawer-hamburger-icon,
+.drawer-hamburger-icon:before,
+.drawer-hamburger-icon:after {
+  width: 100%;
+  height: 2px;
+  -webkit-transition: all .6s cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  transition: all .6s cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  background-color: #555555;/* ここを上書きするとハンバーガーメニューのトグルと閉じるボタンの色が変更できる */
+}
+
+
+body {
+    color: #555555;
+}
+a.nav-link.navbar-default{
+    color: #4aabc4;
+}
+a{
+    color: #4aabc4;
+}
