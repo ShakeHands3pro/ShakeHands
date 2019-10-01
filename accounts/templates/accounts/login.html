@@ -1,29 +1,42 @@
 {% extends "accounts/base.html" %}
+{% load static %}
+{% block class %}
+<!-- cssを追加できる -->
+<link href="{% static 'css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <!-- 左側、ログインエリア -->
-    <div class="card col-md-6">
-        <div class="card-body">
-            <form action="{% url 'accounts:login' %}" method="POST">
-              {% csrf_token %}
-                {{ form.non_field_errors }}
-                {% for field in form %}
-                    {{ field }}
-                    {{ field.errors }}
-                    <hr>
-                {% endfor %}
-                <button type="submit" class="btn btn-success btn-lg btn-block" >ログイン</button>
-                <input type="hidden" name="next" value="{{ next }}" />
 
-            </form>
+        <div class="card col-md-6 login_form">
+            <h3>login</h3>
+            <div class="card-body">
+                <form action="{% url 'accounts:login' %}" method="POST">
+                {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        {{ field }}
+                        {{ field.errors }}
+                        <hr>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-outline-info btn-lg" >ログイン</button>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+            </div>
         </div>
-    </div><!-- 左側、ログインエリアおわり -->
+
+    <!-- 左側、ログインエリアおわり -->
 
     <!-- 右側、会員登録エリア -->
-    <div class="card col-md-6">
-        <div class="card-body">
-            <a href="{% url 'accounts:signup' %}" class="btn btn-success btn-lg btn-block" >会員登録</a>
-            <a href="{% url 'accounts:password_reset' %}" class="btn btn-success btn-lg btn-block" >パスワード再設定</a>      
+    <div class="card col-md-6 container">
+        <div class="card-body row" col align-self-center>
+            <div style="margin-bottom: 10px;" class="col-8 offset-2">
+                <a href="{% url 'accounts:signup' %}" style="display:inline">新規会員登録</a>
+            </div>
+            <div class="col-6 offset-2">
+                <a href="{% url 'accounts:password_reset' %}">パスワード再設定</a>    
+            </div>  
         </div>
     </div><!-- 右側、会員登録エリアおわり -->
 </div>

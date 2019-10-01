@@ -14,7 +14,7 @@ from django.template.loader import render_to_string
 from django.views import generic
 from .forms import (
     LoginForm, UserCreateForm,UserSettingForm,
-    MyPasswordResetForm, MySetPasswordForm
+    MyPasswordResetForm, MySetPasswordForm,iconChangeForm
 )
 from .models import (
     UserSetting
@@ -35,7 +35,7 @@ class Login(LoginView):
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('accounts:signup_complete')
+            return redirect('mypage:top')
         else:
             return super().post(request, *args, **kwargs)
 
@@ -135,18 +135,41 @@ class UserSettingUpdate(LoginRequiredMixin,generic.UpdateView):
     template_name = 'accounts/signup_setting.html'
     form_class = UserSettingForm
     model = UserSetting
-    success_url = reverse_lazy('accounts:signup_complete')
+    success_url = reverse_lazy('mypage:top')
     def get_object(self):
         obj=UserSetting.objects.get(user=self.request.user)
         return obj
+    
+
+class iconPic_change(LoginRequiredMixin,generic.TemplateView):
+    template_name = 'accounts/set_iconpic.html'
+    form = iconChangeForm
+    def get_object(self):
+        obj = UserSetting.objects.get(user=self.request.user)
+        return obj
     def get_context_data(self, **kwargs):
-        context = super(UserSettingUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         settings = UserSetting.objects.get(user=self.request.user)
         if settings.icon_pic:
             context.update({
                 'icon_now':settings.icon_pic,
             })
         return context
+<<<<<<< HEAD
+=======
+    def post(self,request):
+        model = UserSetting.objects.get(user=self.request.user)
+        form = iconChangeForm(request.POST,request.FILES,instance=model)
+        if form.is_valid():
+            form.save()
+        return redirect('accounts:iconSetting')
+    def get(self, request, **kwargs):
+        settings = UserSetting.objects.get(user=self.request.user)
+        if settings.icon_pic:
+            return render(request,self.template_name,{'form':self.form,'icon_now':settings.icon_pic})
+        return render(request,self.template_name,{'form':self.form})
+
+>>>>>>> origin/master
 
 
 

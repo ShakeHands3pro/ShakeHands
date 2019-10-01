@@ -41,7 +41,7 @@ class MyUserAdmin(UserAdmin):
     ordering = ('email',)
 
 class UserSettingAdmin(admin.ModelAdmin):
-    fields = ['display_name','icon_pic','graduation_year','course']
+    fields = ['user','display_name','icon_pic','graduation_year','course']
 
 
 admin.site.register(User, MyUserAdmin)

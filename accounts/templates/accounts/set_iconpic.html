@@ -1,0 +1,100 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block class %}
+<!-- cssを追加できる -->
+<link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block jsclass %}
+<!-- jsを追加できる -->
+<script src="{% static 'js/cropper.min.js' %}"></script>
+<script>
+    $(function () {
+        /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+        /* Displaying the preview inside a modal after the user selects the image */       
+        $("#id_icon_pic").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#image").attr("src", e.target.result);
+                    $("#modalCrop").modal("show");
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+          });
+    
+        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+        var $image = $("#image");          
+        var cropBoxData;
+        var canvasData;
+        var cropper;
+        
+        $("#modalCrop").on("shown.bs.modal", function () {
+            cropper = new Cropper(image,{
+                viewMode: 1,
+                aspectRatio: 1/1,
+                minCropBoxWidth: 200,
+                minCropBoxHeight: 200,
+                ready: function () {
+                //should ser crop box data first here
+                cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
+                }
+            });
+        }).on("hidden.bs.modal", function () {
+            cropBoxData = cropper.getCropBoxData();
+            canvasData = cropper.getCanvasData();
+            cropper.destroy();
+        });
+    
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload").click(function () {
+            var cropData = cropper.getCropBoxData();
+            $("#id_x").val(cropData["left"]);
+            $("#id_y").val(cropData["top"]);
+            $("#id_height").val(cropData["height"]);
+            $("#id_width").val(cropData["width"]);
+            $("#formUpload").submit();
+        });   
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data" id="formUpload">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  <div class="form-group">
+      <label for="{{ form.icon_pic.id_for_label }}">{{form.icon_pic.label_tag}}</label><br>
+      <img src="{{icon_now.url}}" width="200"/>
+      {{form.icon_pic}}
+      <input type="hidden" name="x" value="" id="id_x">
+      <input type="hidden" name="y" value="" id="id_y">
+      <input type="hidden" name="width" value="" id="id_width">
+      <input type="hidden" name="height" value="" id="id_height">
+  </div>          
+</form>
+
+<!-- MODAL TO CROP THE IMAGE -->
+<div class="modal fade" id="modalCrop">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Crop the photo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div class="media">
+                <img src="" id="image" style="max-width: 100%;">
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
+                <button type="button" class="btn btn-outline-info js-crop-and-upload">Crop and upload</button>
+            </div>
+        </div>
+    </div>  
+</div>
+{% endblock %}
