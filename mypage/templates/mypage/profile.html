@@ -1,0 +1,192 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block class %}
+<!-- cssを追加できる -->
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class ="profile_head row d-flex align-items-center">
+    {% if user_detail.icon_pic %}
+        <img src="{{user_detail.icon_pic.url}}" class="col-3 img-fluid">
+    {% endif %}
+    <div class ="col-9 container-fluid">
+        <div class="row d-flex align-items-center">
+            <div class="col-6">
+                <h4>{{ display_name }}</h4>
+                <a>{{ user_detail.graduation_year }}年度卒業予定</a><br>
+                <a>{{ user_detail.get_course_display }}学科</a><br>
+            </div>
+            <div class="col-6">
+            {% if follow_state != 5%}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="followstate_ChangeParam" value="{{follow_state}}">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">{{followButton_txt}}</button> 
+            </form>     
+            {% endif %} 
+            </div>              
+        </div>        
+    </div>    
+</div>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="#tab1" class="nav-link navbar-default active" data-toggle="tab">大学生活</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tab2" class="nav-link navbar-default" data-toggle="tab">就職活動</a>
+        </li>
+        {% if follow_state == 1 %}
+        <li class="nav-item">
+            <a href="#tab3" class="nav-link navbar-default" data-toggle="tab">相互フォロワー機能</a>
+        </li>
+        {% endif %}
+    </ul>
+
+        <!--タブの中身-->
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane active content_into_tab">
+                <!--Tab1の内容-->
+                <div class ="sep_data">
+                    <h4>所属しているサークルや部活</h4>
+                    {% for field in club %}
+                    <table class="table sep_data">
+                        <tr>
+                            <td>
+                                <p>名称：</p>
+                                {{ field.club_name }}
+                            </td>
+                        </tr>
+                    </table>
+                    {% endfor %}
+                </div>
+                <div class ="sep_data">
+                        <h4>オープンクエスチョン</h4>
+                        {% for field in openQ %}
+                        <table class="table sep_data">
+                            <tr>
+                                <td>
+                                    <p>質問：</p>
+                                    {{ field.openQ }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>回答：</p>
+                                    {{ field.ans|linebreaksbr }}
+                                </td>
+                            </tr>
+                        </table>
+                        {% endfor %}
+                </div>               
+            </div>
+            <div id="tab2" class="tab-pane content_into_tab">
+                <!--Tab２の内容-->
+                <div class ="sep_data">
+                    <h4>就活希望</h4>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <p>希望業界：</p>
+                                {{ jobReqestment.industry }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>希望職種：</p>
+                                {{ jobReqestment.occupation }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>希望勤務地：</p>
+                                {{ jobReqestment.workplace }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+
+                <div class ="sep_data">
+                    <h4>就活ログ</h4>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <p>就活を始めた時期：</p>
+                                {{ jobHunting_startTime.season }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+
+                <div class ="sep_data">
+                    <h4>おすすめのインターンシップ</h4>
+                    {% for field in internship_rec %}
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <p>業界：</p>
+                                    {{ field.industry }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>職種：</p>
+                                    {{ field.occupation }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>社名：</p>
+                                    {{ field.company_name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>時期：</p>
+                                    {{ field.season }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>期間：</p>
+                                    {{ field.period }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>内容：</p>
+                                    {{ field.overView|linebreaksbr }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>感想：</p>
+                                    {{ field.implessions|linebreaksbr }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>最終更新日：</p>
+                                    {{ field.post_date }}
+                                </td>
+                            </tr>
+                        </table>
+                    {% endfor %}
+                    </div>
+                </div>
+                
+
+            <div id="tab3" class="tab-pane content_into_tab">
+                <!--Tab３の内容-->
+            <a href="{% url 'mypage:profile' id=display_user.pk %}">質問する</a>
+            <a href="{% url 'addexchange:request' id=display_user.pk %}">アドレス交換申請する</a>
+            </div>
+
+        </div>   
+    </div>
+{% endblock %}
+

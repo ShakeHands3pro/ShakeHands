@@ -1,0 +1,148 @@
+{% extends "accounts/base.html" %}
+{% block class %}
+<style>
+  .content{
+    padding: 5vw;
+    padding-top: 5vw;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="content">
+  <h3>就活希望</h3>
+  <a href="{% url 'mypage:jobhunting_requestment' %}"><i class="fas fa-edit">edit</i></a>
+  <table class="table">
+    <tr>
+      <td>
+        <p>希望業界：</p>
+        {{ jobReqestment.industry }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>希望職種：</p>
+        {{ jobReqestment.occupation }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>希望勤務地：</p>
+        {{ jobReqestment.workplace }}
+      </td>
+    </tr>
+  </table>
+
+  <div style="display: inline;">
+    <h3>就活ログ</h3>
+    <a href="{% url 'mypage:jobhunting_startTime' %}"><i class="fas fa-edit">edit</i></a>
+  </div>
+
+  <table class="table">
+    <tr>
+      <td>
+        <p>就活を始めた時期：</p>
+        {{ jobHunting_StartTime.season }}
+      </td>
+    </tr>
+  </table>
+
+
+  <h3>おすすめのインターンシップ</h3>
+  <a href="{% url 'mypage:jobhunting_internRec_create' %}"><i class="fas fa-plus">add</i></a>
+  {% for field in internshipRec %}
+  <table class="table">
+    <tr>
+      <td>
+        <p>業界：</p>
+        {{ field.industry }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>職種：</p>
+        {{ field.occupation }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>社名：</p>
+        {{ field.company_name }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>時期：</p>
+        {{ field.season }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>期間：</p>
+        {{ field.period }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>内容：</p>
+        {{ field.overView }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>感想：</p>
+        {{ field.implessions }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>最終更新日：</p>
+        {{ field.post_date }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+          <a href="{% url 'mypage:jobhunting_internRec_update' id=field.id %}"><i class="fas fa-edit">edit</i></a>
+      </td>
+      <td>
+          <a href="{% url 'mypage:jobhunting_internRec_delete' id=field.id %}"><i class="fas fa-trash">delete</i></a>
+      </td>
+    </tr>
+  </table>
+  {% endfor %}
+
+
+  <h3>内定した会社</h3>
+  <a href="{% url 'mypage:jobhunting_prospectiveEmployer_create' %}"><i class="fas fa-plus">add</i></a>
+  {% for field in prospectiveEmployer %}
+  <table class="table">
+    <tr>
+      <td>
+        <p>業界：</p>
+        {{ field.industry }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>職種：</p>
+        {{ field.occupation }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>社名：</p>
+        {{ field.company_name }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="{% url 'mypage:jobhunting_prospectiveEmployer_update' id=field.id %}"><i class="fas fa-edit">edit</i></a>
+      </td>
+      <td>
+        <a href="{% url 'mypage:jobhunting_prospectiveEmployer_delete' id=field.id %}"><i class="fas fa-trash">delete</i></a>
+      </td>
+    </tr>
+  </table>
+  {% endfor %}
+
+</div>
+{% endblock %}

@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup',#画像ファイルが投稿削除とともに消されるようにするもの。独自追加
+    'dateutil',#日付の差分を月単位で取得するもの
     'accounts',
+    'mypage',
+    'addexchange',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'utility': 'addexchange.templatetags.get_usersettings' # 追記
+            }
         },
     },
 ]
@@ -131,7 +137,7 @@ STATICFILES_DIRS=(
 AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_URL = 'accounts:login'  # ログインするページ。デフォルトにするなら"/admin/login/"等も
-LOGIN_REDIRECT_URL = 'accounts:signup_complete'  
+LOGIN_REDIRECT_URL = 'mypage:top'  
 # ログインページに直接飛んだとき、ログイン完了後のリダイレクト先、
 # これ書いておかないと/profileという存在しないページにリダイレクトされて404エラーが出ます
 

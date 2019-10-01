@@ -1,0 +1,72 @@
+{% extends "accounts/base.html" %}
+{% block class %}
+<style>
+  .content{
+    padding: 5vw;
+    padding-top: 5vw;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="content">
+  <h3>所属しているサークルや部活</h3>
+  <a href="{% url 'mypage:univlife_club_add' %}"><i class="fas fa-plus">add</i></a>
+  {% for field in myclub %}
+  <table class="table">
+    <tr>
+      <td>
+        <p>名称：</p>
+        {{ field.club_name }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>最終更新日：</p>
+        {{ field.post_date }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+          <a href="{% url 'mypage:univlife_club_update' id=field.pk %}"><i class="fas fa-edit">edit</i></a>
+      </td>
+      <td>
+          <a href="{% url 'mypage:univlife_club_delete' id=field.pk %}"><i class="fas fa-trash">delete</i></a>
+      </td>
+    </tr>
+  </table>
+  {% endfor %}
+
+  <h3>オープンクエスチョン</h3>
+  <a href="{% url 'mypage:univlife_openQ_add' %}"><i class="fas fa-plus">add</i></a>
+  {% for field in openQ %}
+  <table class="table">
+    <tr>
+      <td>
+        <p>質問：</p>
+        {{ field.openQ }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>回答：</p>
+        {{ field.ans }}
+      </td>
+    </tr>
+    <tr>
+          <td>
+            <p>最終更新日：</p>
+            {{ field.post_date }}
+          </td>
+    </tr>
+    <tr>
+      <td>
+          <a href="{% url 'mypage:univlife_openQ_update' id=field.pk %}"><i class="fas fa-edit">edit</i></a>
+      </td>
+      <td>
+          <a href="{% url 'mypage:univlife_openQ_delete' id=field.pk %}"><i class="fas fa-trash">delete</i></a>
+      </td>
+    </tr>
+  </table>
+  {% endfor %}
+</div>
+{% endblock %}

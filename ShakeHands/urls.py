@@ -19,6 +19,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace = 'accounts')),
+    path('address_exchange/', include('addexchange.urls', namespace = 'addexchange')),
+    path('',include('mypage.urls', namespace ='mypage')),
 ]
 
 # 以下、media用の定義

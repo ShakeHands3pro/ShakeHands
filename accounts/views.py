@@ -35,7 +35,7 @@ class Login(LoginView):
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('accounts:signup_complete')
+            return redirect('mypage:top')
         else:
             return super().post(request, *args, **kwargs)
 
@@ -135,7 +135,7 @@ class UserSettingUpdate(LoginRequiredMixin,generic.UpdateView):
     template_name = 'accounts/signup_setting.html'
     form_class = UserSettingForm
     model = UserSetting
-    success_url = reverse_lazy('accounts:signup_complete')
+    success_url = reverse_lazy('mypage:top')
     def get_object(self):
         obj=UserSetting.objects.get(user=self.request.user)
         return obj
