@@ -23,11 +23,28 @@ STATE_CHOICES=(
     ('3','非表示'),
 )
 class Question(models.Model):
+    """質問"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=255)
     questionner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='questionner')
     answerer = models.ForeignKey(User, on_delete=models.CASCADE,related_name='answerer')
     question = models.TextField("質問",blank=False, null=False)
     created_at = models.DateTimeField("作成日",default=timezone.now)
     status = models.CharField("ステータス",max_length=1,choices=STATE_CHOICES,blank=False)
     def __str__(self):
-        return question
+        return self.question
+
+class Answer(models.Model):
+    """回答"""
+    questioner = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questioner')
+    advice = models.TextField("回答",blank=False, null=False)
+    created_at = models.DateTimeField("回答日",default=timezone.now)
+    def __str__(self):
+        return self.answer
+
+# class QIndex():
+    # index = models.CharField()
+
+class QHaveIndex():
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question',blank=False, null=False)
+    # index = model.ForeignKey(QIndex, on_delete=models.CASCADE, related_name='index',blank=False, null=False)
