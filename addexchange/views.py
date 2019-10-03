@@ -42,11 +42,11 @@ class addExchange_list(LoginRequiredMixin, generic.TemplateView):
         today=datetime.date.today()+relativedelta(days=1)
         threemonths_ago=today-relativedelta(months=3)
         #まだ返事が来ていないもの
-        waiting = addressExchange.objects.filter(questioner=login_user).exclude(approve_boolean=True and False).filter(request_time__range=(threemonths_ago, today))      
+        waiting = addressExchange.objects.filter(questioner=login_user).filter(approve_boolean=None).filter(request_time__range=(threemonths_ago, today))      
         #申請して連絡先交換が成立したもの
-        accepted = addressExchange.objects.filter(Q(questioner=login_user), Q(approve_boolean=True)|Q(answerer=login_user), Q(approve_boolean=True))
+        accepted = addressExchange.objects.filter(Q(questioner=login_user,approve_boolean=True)|Q(answerer=login_user, approve_boolean=True))
         #申請されてまだ返事をしていないもの
-        offered = addressExchange.objects.filter(answerer=login_user).filter(request_time__range=(threemonths_ago, today)) 
+        offered = addressExchange.objects.filter(answerer=login_user).filter(approve_boolean=None).filter(request_time__range=(threemonths_ago, today)) 
         context.update({
             'waiting':waiting,
             'accepted':accepted,
