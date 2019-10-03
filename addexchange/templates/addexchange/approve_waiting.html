@@ -1,0 +1,41 @@
+{% extends "accounts/base.html" %}
+{% load utility %}
+
+{% block class %}
+<!-- cssを追加できる -->
+{% endblock %}
+
+{% block content %}
+<h3>アドレス交換申請詳細</h3>
+<h5>申請者</h5>
+<div class="row">
+        <div class="col-3">
+            <img src="{{user_id|get_iconpic_url}}" class="img-fluid">
+        </div>
+        <div class="col-9">
+            {{ user_id|get_graduationyear }}
+            {{ user_id|get_displayname }}<br>
+            {{ user_id|get_course }}<br>
+            {% if model.approve_boolean == True %}
+            {{ user_id|get_email }}<br>
+            {% endif %}
+        </div>                  
+</div>
+<h5>申請理由</h5>
+<div>
+    {{ model.text|linebreaksbr }}
+</div>
+<form action="" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="state" value="1">
+        <input type="hidden" name="model_id" value="{{ model.id }}">
+        <button type="submit" class="btn btn-outline-secondary btn-sm">許可</button> 
+    </form>   
+<form action="" method="POST"></form>
+            {% csrf_token %}
+            <input type="hidden" name="state" value="0">
+            <input type="hidden" name="model_id" value="{{ model.id }}">
+            <button type="submit" class="btn btn-outline-secondary btn-sm">拒否</button> 
+        </form>   
+{% endblock %}
+
