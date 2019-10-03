@@ -64,13 +64,11 @@ COURSE_CHOICES=(
 )
 class UserSettingForm(forms.ModelForm):
     #メールアドレス認証後の設定form
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['display_name'].required = False
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-
     class Meta:
         model = UserSetting
         fields = (
@@ -78,6 +76,8 @@ class UserSettingForm(forms.ModelForm):
             'course',
             'display_name',
         )
+
+
 
 class MyPasswordResetForm(PasswordResetForm):
     """パスワード忘れたときのフォーム"""

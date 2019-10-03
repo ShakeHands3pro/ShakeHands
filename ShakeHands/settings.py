@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_cleanup',#画像ファイルが投稿削除とともに消されるようにするもの。独自追加
     'dateutil',#日付の差分を月単位で取得するもの
     'accounts',
+    'questionBoxes',
     'mypage',
     'addexchange',
 ]
