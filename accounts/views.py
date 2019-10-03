@@ -155,8 +155,6 @@ class iconPic_change(LoginRequiredMixin,generic.TemplateView):
                 'icon_now':settings.icon_pic,
             })
         return context
-<<<<<<< HEAD
-=======
     def post(self,request):
         model = UserSetting.objects.get(user=self.request.user)
         form = iconChangeForm(request.POST,request.FILES,instance=model)
@@ -169,7 +167,6 @@ class iconPic_change(LoginRequiredMixin,generic.TemplateView):
             return render(request,self.template_name,{'form':self.form,'icon_now':settings.icon_pic})
         return render(request,self.template_name,{'form':self.form})
 
->>>>>>> origin/master
 
 
 

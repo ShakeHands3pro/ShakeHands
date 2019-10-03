@@ -1,0 +1,19 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<h2>質問内容</h2>
+    <div class="form-group">
+        {{ advice|linebreaksbr  }}
+        {{ form.errors }}
+    </div>
+<h2>回答する</h2>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-group">
+        {{ form.advice }}
+        {{ form.advice.errors }}
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary btn-lg">送信</button>
+</form>
+{% endblock %}
