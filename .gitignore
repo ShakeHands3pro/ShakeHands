@@ -1,2 +1,6 @@
 *.pyc
 .vscode/settings.json
+.DS_Store
+__init__.py
+.gitignore
+
