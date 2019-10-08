@@ -1,0 +1,109 @@
+{% extends "accounts/base.html" %}
+{% load utility %}
+
+{% block class %}
+<!-- cssを追加できる -->
+{% endblock %}
+
+{% block content %}
+
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a href="#tab1" class="nav-link navbar-default active" data-toggle="tab">未回答の質問</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab2" class="nav-link navbar-default" data-toggle="tab">あなたへの質問</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab3" class="nav-link navbar-default" data-toggle="tab">回答された質問</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab4" class="nav-link navbar-default" data-toggle="tab">あなたからの質問</a>
+    </li>
+</ul>
+        <!--タブの中身-->
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane active content_into_tab">
+                    <!--Tab1の内容-->
+                    {% for obj1 in I_unanswered %}
+                    <div class="row">
+                            <div class="col-12">
+                                <a href="{% url 'questionBoxes:answer' id=obj1.id %}">{{ obj1.title }}</a><br>
+                                {{ obj1.questionner.id|get_graduationyear }}
+                                {{ obj1.questionner.id|get_course }}
+                                <a href="{% url 'mypage:profile' id=obj1.questionner.id %}">{{ obj1.questionner.id|get_displayname }}</a>
+                                <p>質問日時：{{ obj1.created_at }}</p>
+                            </div>
+                    </div>               
+                    {% endfor %}           
+            </div>
+
+
+
+            <div id="tab2" class="tab-pane content_into_tab">
+                <!--Tab２の内容-->
+                {% for obj2 in allQ_IWasAsked %}
+                <div class="row">
+                        <div class="col-12">
+                            <a href="{% url 'questionBoxes:detail' id=obj2.id %}">{{ obj2.title }}</a>
+                            {% if obj2.status == '1' %}
+                            <p>未回答</p>
+                            {% elif obj2.status == '2' %}
+                            <p>回答済</p>
+                            {% endif %}
+                            {{ obj2.questionner.id|get_graduationyear }}
+                            {{ obj2.questionner.id|get_course }}
+                            <a href="{% url 'mypage:profile' id=obj2.questionner.id %}">{{ obj2.questionner.id|get_displayname }}</a>
+                            <p>質問日時：{{ obj2.created_at }}</p>
+                        </div>  
+                </div>         
+                {% endfor %}                  
+            </div>
+  
+
+
+
+            <div id="tab3" class="tab-pane content_into_tab">
+                <!--Tab３の内容-->
+                <div class="container">
+                    {% for obj in answered_by %}
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{% url 'questionBoxes:detail' id=obj.id %}">{{ obj.title }}</a><br>
+                            {{ obj.answerer.id|get_graduationyear }}
+                            {{ obj.answerer.id|get_displayname }}
+                            <a href="{% url 'mypage:profile' id=obj.answerer.id %}">{{ obj.answerer.id|get_course }}</a>
+                            <p>質問日時：{{ obj.created_at }}</p>
+                        </div>
+                    </div>               
+                    {% endfor %} 
+                </div>
+            </div>
+
+
+
+
+            <div id="tab4" class="tab-pane content_into_tab">
+                <!--Tab３の内容-->
+                <div class="container">
+                    {% for obj in allQ_IAskedFor %}
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{% url 'questionBoxes:detail' id=obj.id %}">{{ obj.title }}</a>
+                            {% if obj.status == '1' %}
+                            <p>未回答</p>
+                            {% elif obj.status == '2' %}
+                            <p>回答済</p>
+                            {% endif %}
+                            {{ obj.answerer.id|get_graduationyear }}
+                            {{ obj.answerer.id|get_displayname }}
+                            <a href="{% url 'mypage:profile' id=obj.answerer.id %}">{{ obj.answerer.id|get_course }}</a>
+                            <p>質問日時：{{ obj.created_at }}</p>
+                        </div> 
+                    </div>                             
+                    {% endfor %} 
+                </div>
+            </div>   
+    </div>
+{% endblock %}

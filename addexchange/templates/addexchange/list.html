@@ -33,9 +33,9 @@
                             {{ obj.questioner.id|get_displayname }}<br>
                             {{ obj.questioner.id|get_course }}<br>
                             <p>申請日時：{{ obj.request_time }}</p>
-                            <a href="{% url 'addexchange:detail' id=obj.pk %}">詳細</a>
+                            <a href="{% url 'addexchange:confirm' id=obj.pk %}">詳細</a>
                         </div>                  
-                    </div>
+                </div>
                 {% endfor %}              
             </div>
             <div id="tab2" class="tab-pane content_into_tab">

@@ -182,7 +182,7 @@
 
             <div id="tab3" class="tab-pane content_into_tab">
                 <!--Tab３の内容-->
-            <a href="{% url 'mypage:profile' id=display_user.pk %}">質問する</a>
+            <a href="{% url 'questionBoxes:create' id=display_user.pk %}">質問する</a>
             <a href="{% url 'addexchange:request' id=display_user.pk %}">アドレス交換申請する</a>
             </div>
 
