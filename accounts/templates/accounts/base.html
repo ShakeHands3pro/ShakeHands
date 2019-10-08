@@ -1,74 +1,113 @@
+{% load static %}
 <!doctype html>
 <html lang="ja">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/drawer.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    {% block class %}{% endblock %}
 
-    <title>ログイン</title>
+    <script src="https://kit.fontawesome.com/d3c761ab9c.js" crossorigin="anonymous"></script>
+
+    <title>ShakeHands</title>
 </head>
-<body>
-    <!-- ナビバー -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'mypage:top' %}">ShakeHands</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<body class="drawer drawer--left drawer--sidebar">
+    <header role="banner">
+        <button type="button" class="drawer-toggle drawer-hamburger">
+          <span class="sr-only">toggle navigation</span>
+          <span class="drawer-hamburger-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          {% if user.is_authenticated %}
-          <li>
-            <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">ログアウト</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="{% url 'accounts:accountsSetting' %}">アカウント情報を更新する</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="{% url 'accounts:iconSetting' %}">アイコン画像を変更する</a>
-          </li>
-          <li>
-              <a class="nav-item nav-link" href="{% url 'mypage:univlife_setting' %}">学生生活情報を更新する</a>
-          </li>
-          <li>
-              <a class="nav-item nav-link" href="{% url 'mypage:jobhunting_setting' %}">就活情報を更新する</a>
-            </li>
-            <li>
-              <a class="nav-item nav-link" href="{% url 'mypage:profile' id=user.pk %}">自分のプロフィールを確認する</a>
-            </li>
-            <li>
-              <a class="nav-item nav-link" href="{% url 'mypage:alluser_list' %}">ユーザ一覧</a>
-            </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="{% url 'accounts:login' %}">
-            ログイン
-          </a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+        <nav class="drawer-nav mydrawer_setting" role="navigation">
+          <ul class="drawer-menu">
+            <div class="drawer_top">
+                <h3>ShakeHands</h3>
+            </div>
+              {% if user.is_authenticated %}
+              
+              <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:alluser_list' %}">ユーザ一覧</a></li>
+              
+              <div class="card">
+                <div class="mycard-header " role="tab" id="collapseListGroupHeading1">
+                  <a href="#collapseListGroup1" class="collapsed text-body dropdown-toggle" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup1" style="display: block;">ユーザ設定</a>
+                </div><!-- /.card-header -->  
+                <div class="collapse" role="tabpanel" id="collapseListGroup1" aria-labelledby="collapseListGroupHeading1" aria-expanded="false">
+                    <ul class="list-group list-group-flush">
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'accounts:iconSetting' %}">アイコン画像を変更</a></li>
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'accounts:accountsSetting' %}">アカウント情報を更新</a></li>
+                    </ul>
+                </div>                
+              </div>
 
-    <!-- メインコンテント -->
-    <div class="container mt-3">
-        {% block content %}{% endblock %}
-    </div>
+              <div class="card">
+                  <div class="mycard-header " role="tab" id="collapseListGroupHeading1">
+                    <a href="#collapseListGroup2" class="collapsed text-body dropdown-toggle" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup2" style="display: block">プロフィールを更新</a>
+                  </div><!-- /.card-header -->  
+                  <div class="collapse" role="tabpanel" id="collapseListGroup2" aria-labelledby="collapseListGroupHeading2" aria-expanded="false">
+                      <ul class="list-group list-group-flush">
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:univlife_setting' %}">学生生活情報を更新</a></li>
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:jobhunting_setting' %}">就活情報を更新</a></li>
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:profile' id=user.pk %}">プロフィールを確認</a></li>
+                      </ul>
+                  </div>                
+                </div>
+              <li><a class="drawer-dropdown-menu-item" href="{% url 'addexchange:list' %}">アドレス交換申請一覧</a></li>
+              <li><a class="drawer-dropdown-menu-item" href="{% url 'questionBoxes:list' %}">質問箱</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a class="drawer-dropdown-menu-item" href="{% url 'accounts:logout' %}">ログアウト</a></li>
+              
+              {% else %}
+              <li class="nav-item">
+                <a class="drawer-dropdown-menu-item" href="{% url 'accounts:login' %}">
+                ログイン
+              </a>
+              </li>
+              {% endif %}
+              
+              
+          </ul>
+          
+        </nav>
+        <div class="container-fluid">
+          <div class="row" style="border-bottom:solid 0.1px #e2e2e2;">
+            <div class="col align-self-center">
+              <a href="{% url 'mypage:top' %}">
+                <img src="{% static 'img/logo_long.svg' %}" height="40px" style="margin-top: 8px;margin-bottom: 8px; " class="col align-self-center">
+              </a>            
+            </div>
+          </div>
+        </div>
+
+      </header>
+      <main role="main" class="drawer-contents">
+          <section class="item bg-amber">
+          <div style="margin-top: 40px;"></div>
+          {% block content %}{% endblock %}
+        <!-- Page content -->
+        </section>
+      </main>
+      
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-            crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/iscroll.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/drawer.min.js' %}" charset="utf-8"></script>
+    {% block jsclass %}{% endblock %}
+    <script>
+        $(document).ready(function() {
+          $('.drawer').drawer();
+        });
+    </script>
 </body>
 </html>

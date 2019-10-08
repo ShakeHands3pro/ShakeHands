@@ -1,165 +1,103 @@
+{% extends "accounts/base.html" %}
 {% load static %}
-<!doctype html>
-<html lang="ja">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% block class %}
+<!-- cssを追加できる -->
+<link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
+{% endblock %}
 
-    <!-- bootstrap CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- cropperjs CSS -->
-    <link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
-
-
-    <title>ログイン</title>
-</head>
-<body>
-    <!-- ナビバー -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'mypage:top' %}">ShakeHands</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          {% if user.is_authenticated %}
-          <li>
-            <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">ログアウト</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="{% url 'accounts:accountsSetting' %}">アカウント情報を更新する</a>
-          </li>
-          <li>
-            <a class="nav-item nav-link" href="{% url 'accounts:iconSetting' %}">アイコン画像を変更する</a>
-          </li>
-          <li>
-                <a class="nav-item nav-link" href="{% url 'mypage:univlife_setting' %}">学生生活情報を更新する</a>
-            </li>
-            <li>
-                    <a class="nav-item nav-link" href="{% url 'mypage:jobhunting_setting' %}">就活情報を更新する</a>
-                  </li>
-                  <li>
-                    <a class="nav-item nav-link" href="{% url 'mypage:profile' id=user.pk %}">自分のプロフィールを確認する</a>
-                  </li>
-                  <li>
-                    <a class="nav-item nav-link" href="{% url 'mypage:alluser_list' %}">ユーザ一覧</a>
-                  </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="{% url 'accounts:login' %}">ログイン</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
-
-    <!-- メインコンテント -->
-    <div class="container mt-3">
-            
-            <form action="" method="POST" enctype="multipart/form-data" id="formUpload">
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-            
-                <div class="form-group">
-                    <label for="{{ form.icon_pic.id_for_label }}">{{form.icon_pic.label_tag}}</label><br>
-                    <img src="{{icon_now.url}}" width="200"/>
-                    {{form.icon_pic}}
-                    <input type="hidden" name="x" value="" id="id_x">
-                    <input type="hidden" name="y" value="" id="id_y">
-                    <input type="hidden" name="width" value="" id="id_width">
-                    <input type="hidden" name="height" value="" id="id_height">
-                </div>          
-            </form>
-            <!-- MODAL TO CROP THE IMAGE -->
-            <div class="modal fade" id="modalCrop">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">Crop the photo</h4>
-                        </div>
-                        <div class="modal-body">
-                            <img src="" id="image" style="max-width: 100%;">
-                        </div>
-                        <div class="modal-footer">
-                            <div class="btn-group pull-left" role="group">
-                                <button type="button" class="btn btn-default js-zoom-in">
-                                    <span class="glyphicon glyphicon-zoom-in"></span>
-                                </button>
-                                <button type="button" class="btn btn-default js-zoom-out">
-                                    <span class="glyphicon glyphicon-zoom-out"></span>
-                                </button>
-                            </div>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
-                            <button type="button" class="btn btn-primary js-crop-and-upload">Crop and upload</button>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/cropper.min.js' %}"></script>
-    
-
-    <script>
-        $(function () {
-            /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
-            /* Displaying the preview inside a modal after the user selects the image */
-            
-            $("#id_icon_pic").change(function () {
-                if (this.files && this.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#image").attr("src", e.target.result);
-                        $("#modalCrop").modal("show");
-                    }
-                    reader.readAsDataURL(this.files[0]);
+{% block jsclass %}
+<!-- jsを追加できる -->
+<script src="{% static 'js/cropper.min.js' %}"></script>
+<script>
+    $(function () {
+        /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+        /* Displaying the preview inside a modal after the user selects the image */       
+        $("#id_icon_pic").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#image").attr("src", e.target.result);
+                    $("#modalCrop").modal("show");
                 }
-              });
+                reader.readAsDataURL(this.files[0]);
+            }
+          });
+    
+        /* SCRIPTS TO HANDLE THE CROPPER BOX */
+        var $image = $("#image");          
+        var cropBoxData;
+        var canvasData;
+        var cropper;
         
-            /* SCRIPTS TO HANDLE THE CROPPER BOX */
-            var $image = $("#image");          
-            var cropBoxData;
-            var canvasData;
-            var cropper;
-            
-            $("#modalCrop").on("shown.bs.modal", function () {
-                cropper = new Cropper(image,{
-                    viewMode: 1,
-                    aspectRatio: 1/1,
-                    minCropBoxWidth: 200,
-                    minCropBoxHeight: 200,
-                    ready: function () {
-                    //should ser crop box data first here
-                    cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
-                    }
-                });
-            }).on("hidden.bs.modal", function () {
-                cropBoxData = cropper.getCropBoxData();
-                canvasData = cropper.getCanvasData();
-                cropper.destroy();
+        $("#modalCrop").on("shown.bs.modal", function () {
+            cropper = new Cropper(image,{
+                viewMode: 1,
+                aspectRatio: 1/1,
+                minCropBoxWidth: 200,
+                minCropBoxHeight: 200,
+                responsive:true,
+                restore:true,
+                ready: function () {
+                //should set crop box data first here
+                cropper.setCropBoxData(cropBoxData).setCanvasData(canvasData);
+                }
             });
-        
-            /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
-            $(".js-crop-and-upload").click(function () {
-                var cropData = cropper.getCropBoxData();
-                $("#id_x").val(cropData["left"]);
-                $("#id_y").val(cropData["top"]);
-                $("#id_height").val(cropData["height"]);
-                $("#id_width").val(cropData["width"]);
-                $("#formUpload").submit();
-            });   
+        }).on("hidden.bs.modal", function () {
+            cropBoxData = cropper.getCropBoxData();
+            canvasData = cropper.getCanvasData();
+            cropper.destroy();
         });
+    
+        /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+        $(".js-crop-and-upload").click(function () {
+            var cropData = cropper.getCropBoxData();
+            console.log(cropData)
+            $("#id_x").val(cropData["left"]);
+            $("#id_y").val(cropData["top"]);
+            $("#id_height").val(cropData["height"]);
+            $("#id_width").val(cropData["width"]);
+            $("#formUpload").submit();
+        });   
+    });
+</script>
+{% endblock %}
 
-    </script>
-</body>
-</html>
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data" id="formUpload">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  <div class="form-group">
+      <label for="{{ form.icon_pic.id_for_label }}">{{form.icon_pic.label_tag}}</label><br>
+      <img src="{{icon_now.url}}" width="200"/>
+      {{form.icon_pic}}
+      <input type="hidden" name="x" value="" id="id_x">
+      <input type="hidden" name="y" value="" id="id_y">
+      <input type="hidden" name="width" value="" id="id_width">
+      <input type="hidden" name="height" value="" id="id_height">
+  </div>          
+</form>
+
+<!-- MODAL TO CROP THE IMAGE -->
+<div class="modal fade" id="modalCrop">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Crop the photo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <div class="media">
+                <img src="" id="image" style="max-width: 100%;">
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
+                <button type="button" class="btn btn-outline-info js-crop-and-upload">Crop and upload</button>
+            </div>
+        </div>
+    </div>  
+</div>
+{% endblock %}

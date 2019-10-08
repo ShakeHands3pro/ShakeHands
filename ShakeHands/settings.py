@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cleanup',#画像ファイルが投稿削除とともに消されるようにするもの。独自追加
+    'dateutil',#日付の差分を月単位で取得するもの
     'accounts',
+    'questionBoxes',
     'mypage',
+    'addexchange',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +69,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'utility': 'addexchange.templatetags.get_usersettings' # 追記
+            }
         },
     },
 ]

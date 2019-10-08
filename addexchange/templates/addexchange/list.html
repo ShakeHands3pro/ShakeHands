@@ -1,0 +1,82 @@
+{% extends "accounts/base.html" %}
+{% load utility %}
+
+{% block class %}
+<!-- cssを追加できる -->
+{% endblock %}
+
+{% block content %}
+
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a href="#tab1" class="nav-link navbar-default active" data-toggle="tab">あなたに届いた申請</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab2" class="nav-link navbar-default" data-toggle="tab">承認済申請</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab3" class="nav-link navbar-default" data-toggle="tab">承認待ち</a>
+    </li>
+</ul>
+        <!--タブの中身-->
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane active content_into_tab">
+                <!--Tab1の内容-->
+                {% for obj in offered %}
+                <div class="row">
+                        <div class="col-3">
+                            <img src="{{obj.questioner.id|get_iconpic_url}}" class="img-fluid">
+                        </div>
+                        <div class="col-9">
+                            {{ obj.questioner.id|get_graduationyear }}
+                            {{ obj.questioner.id|get_displayname }}<br>
+                            {{ obj.questioner.id|get_course }}<br>
+                            <p>申請日時：{{ obj.request_time }}</p>
+                            <a href="{% url 'addexchange:confirm' id=obj.pk %}">詳細</a>
+                        </div>                  
+                </div>
+                {% endfor %}              
+            </div>
+            <div id="tab2" class="tab-pane content_into_tab">
+                <!--Tab２の内容-->
+                {% for obj in accepted %}
+                <div class="row">
+                        <div class="col-3">
+                            <img src="{{obj.answerer.id|get_iconpic_url}}" class="img-fluid">
+                        </div>
+                        <div class="col-9">
+                            {{ obj.answerer.id|get_graduationyear }}
+                            {{ obj.answerer.id|get_displayname }}<br>
+                            {{ obj.answerer.id|get_course }}
+                            <a href="{% url 'addexchange:detail' id=obj.pk %}">詳細</a>
+                        </div>                  
+                    </div>
+                {% endfor %} 
+            </div>
+  
+            <div id="tab3" class="tab-pane content_into_tab">
+                <!--Tab３の内容-->
+                <div class="container">
+                    {% for obj in waiting %}
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{obj.answerer.id|get_iconpic_url}}" class="img-fluid">
+                        </div>
+                        <div class="col-9">
+                            {{ obj.answerer.id|get_graduationyear }}
+                            {{ obj.answerer.id|get_displayname }}<br>
+                            {{ obj.answerer.id|get_course }}<br>
+                            <p>申請日時：{{ obj.request_time }}</p>
+                            
+                            <a href="{% url 'addexchange:detail' id=obj.pk %}">詳細</a>
+                        </div>                  
+                    </div>
+                    {% endfor %} 
+                </div>
+            </div>
+
+        </div>   
+    </div>
+{% endblock %}
+

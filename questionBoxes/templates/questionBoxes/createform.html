@@ -1,6 +1,6 @@
 {% extends "accounts/base.html" %}
 {% block content %}
-<h2>{{h2text}}</h2>
+<h2>質問を作成</h2>
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
@@ -11,6 +11,7 @@
         {{ field.errors }}
     </div>
     {% endfor %}
+    <br>
     <button type="submit" class="btn btn-primary btn-lg">保存する</button>
 </form>
 {% endblock %}

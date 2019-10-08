@@ -64,13 +64,11 @@ COURSE_CHOICES=(
 )
 class UserSettingForm(forms.ModelForm):
     #メールアドレス認証後の設定form
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['display_name'].required = False
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-
     class Meta:
         model = UserSetting
         fields = (
@@ -78,6 +76,8 @@ class UserSettingForm(forms.ModelForm):
             'course',
             'display_name',
         )
+
+
 
 class MyPasswordResetForm(PasswordResetForm):
     """パスワード忘れたときのフォーム"""
@@ -113,11 +113,15 @@ class iconChangeForm(forms.ModelForm):
         y = self.cleaned_data.get('y')
         w = self.cleaned_data.get('width')
         h = self.cleaned_data.get('height')
-        width = w if (w<=h) else h
+        r = w if (w<=h) else h
 
         image = Image.open(icon.icon_pic)
-        RectImage = image.crop((x*8,y*8,(width+x)*8,(width+y)*8))
-        resizedImage = RectImage.resize((200,200),Image.ANTIALIAS)
+        print("left:"+str(x))
+        print("top:"+str(y))
+        print("right:"+str((x+r)))
+        print("rower:"+str((y+r)))
+        RectImage = image.crop((x*8.68,y*8.68,(r+x)*8.68,(r+y)*8.68))
+        resizedImage = RectImage.resize((300,300),Image.ANTIALIAS)
         resizedImage.save(icon.icon_pic.path)
 
         return icon
