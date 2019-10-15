@@ -1,6 +1,6 @@
 {% extends "accounts/base.html" %}
 {% load static %}
-
+{% load utility %}
 {% block class %}
 <!-- cssを追加できる -->
 <link href="{% static 'css/profile.css' %}" rel="stylesheet">
@@ -11,11 +11,11 @@
     {% if user_detail.icon_pic %}
         <img src="{{user_detail.icon_pic.url}}" class="col-3 img-fluid">
     {% endif %}
-    <div class ="col-9 container-fluid">
-        <div class="row d-flex align-items-center">
+    <div class ="col-9">
+        <div class="row d-flex align-items-center container-fluid">
             <div class="col-6">
                 <h4>{{ display_name }}</h4>
-                <a>{{ user_detail.graduation_year }}年度卒業予定</a><br>
+                <a>{{ user_detail.graduation_year }}年度卒</a><br>
                 <a>{{ user_detail.get_course_display }}学科</a><br>
             </div>
             <div class="col-6">
@@ -27,8 +27,10 @@
             </form>     
             {% endif %} 
             </div>              
-        </div>        
-    </div>    
+        </div>  
+        <a>{{ userComment.comment }}</a>         
+    </div>
+     
 </div>
 
     <ul class="nav nav-tabs">
@@ -114,12 +116,20 @@
                     <table class="table">
                         <tr>
                             <td>
-                                <p>就活を始めた時期：</p>
-                                {{ jobHunting_startTime.season }}
+                                <p>就活の軸：</p>
+                                {{ policy.policy|linebreaksbr }}
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <p>就活を始めた時期：</p>
+                                {{ jobHunting_startTime.season|linebreaksbr }}
+                            </td>
+                        </tr>
+
                     </table>
                 </div>
+
                 
 
                 <div class ="sep_data">

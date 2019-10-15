@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 from .models import (
-    User,UserSetting
+    User,UserSetting,userComment
 )
 
 
@@ -43,6 +43,10 @@ class MyUserAdmin(UserAdmin):
 class UserSettingAdmin(admin.ModelAdmin):
     fields = ['user','display_name','icon_pic','graduation_year','course']
 
+class userCommentAdmin(admin.ModelAdmin):
+    fields =('user','comment',)
+
 
 admin.site.register(User, MyUserAdmin)
 admin.site.register(UserSetting,UserSettingAdmin)
+admin.site.register(userComment,userCommentAdmin)

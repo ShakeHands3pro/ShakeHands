@@ -32,6 +32,22 @@
     </tr>
   </table>
 
+
+  <div style="display: inline;">
+    <h3>就活の軸</h3>
+    <a href="{% url 'mypage:jobhunting_policy' %}"><i class="fas fa-edit">edit</i></a>
+  </div>
+
+  <table class="table">
+    <tr>
+      <td>
+        <p>就活の中で大切にしたこと：</p>
+        {{ policy.policy|linebreaksbr }}
+      </td>
+    </tr>
+  </table>
+
+
   <div style="display: inline;">
     <h3>就活ログ</h3>
     <a href="{% url 'mypage:jobhunting_startTime' %}"><i class="fas fa-edit">edit</i></a>
