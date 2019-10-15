@@ -120,7 +120,7 @@ class iconChangeForm(forms.ModelForm):
         print("top:"+str(y))
         print("right:"+str((x+r)))
         print("rower:"+str((y+r)))
-        RectImage = image.crop((x*8.68,y*8.68,(r+x)*8.68,(r+y)*8.68))
+        RectImage = image.crop((x,y,(r+x),(r+y)))
         resizedImage = RectImage.resize((300,300),Image.ANTIALIAS)
         resizedImage.save(icon.icon_pic.path)
 
