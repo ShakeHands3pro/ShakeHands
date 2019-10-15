@@ -14,10 +14,11 @@ from django.template.loader import render_to_string
 from django.views import generic
 from .forms import (
     LoginForm, UserCreateForm,UserSettingForm,
-    MyPasswordResetForm, MySetPasswordForm,iconChangeForm
+    MyPasswordResetForm, MySetPasswordForm,iconChangeForm,
+    comment_form
 )
 from .models import (
-    UserSetting
+    UserSetting,userComment
 )
 
 #デフォルトかカスタムか、そのプロジェクトで使用しているUserモデルが取得される。
@@ -166,6 +167,24 @@ class iconPic_change(LoginRequiredMixin,generic.TemplateView):
         if settings.icon_pic:
             return render(request,self.template_name,{'form':self.form,'icon_now':settings.icon_pic})
         return render(request,self.template_name,{'form':self.form})
+
+class commentChange(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'mypage/createOrUpdate.html'
+    form_class = comment_form
+    model = userComment
+    success_url = reverse_lazy('mypage:top')
+    def get_object(self):
+        try:
+            commentModel = userComment.objects.get(user=self.request.user)
+        except userComment.DoesNotExist:
+            commentModel = userComment()
+            commentModel.user = self.request.user
+        return commentModel
+    def get_context_data(self, **kwargs):
+        context = super(commentChange, self).get_context_data(**kwargs)
+        context["h2text"]="トップメッセージを変更する"
+        return context
+     
 
 
 

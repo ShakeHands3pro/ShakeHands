@@ -132,3 +132,6 @@ class UserSetting(models.Model):
     graduation_year = models.IntegerField("卒業年(西暦下2桁)",blank=False,validators=[MinValueValidator(0),MaxValueValidator(99)])
     course = models.CharField("所属学科",max_length=2,choices=COURSE_CHOICES,blank=False)
 
+class userComment(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    comment = models.TextField("自己紹介", max_length=200, null=True)

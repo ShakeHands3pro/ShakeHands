@@ -18,6 +18,7 @@ urlpatterns = [
 
     #就活情報の編集ページ
     path('setting/jobhunting/',views.setting_jobHuntingInfo.as_view(), name='jobhunting_setting'),
+    path('setting/jobhunting/policy',views.jobHuntingPolicy_view.as_view(), name='jobhunting_policy'),
     path('setting/jobhunting/startTime',views.jobHunting_startTime_view.as_view(), name='jobhunting_startTime'),
     path('setting/jobhunting/requestment',views.jobHunting_requestment_view.as_view(), name='jobhunting_requestment'),
     path('setting/jobhunting/internship/create',views.internshipRec_create.as_view(), name='jobhunting_internRec_create'),

@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth import get_user_model
 from .models import (
-    UserSetting
+    UserSetting,userComment
 )
 from PIL import Image
 from django.core.files import File
@@ -120,8 +120,19 @@ class iconChangeForm(forms.ModelForm):
         print("top:"+str(y))
         print("right:"+str((x+r)))
         print("rower:"+str((y+r)))
-        RectImage = image.crop((x*8.68,y*8.68,(r+x)*8.68,(r+y)*8.68))
+        RectImage = image.crop((x,y,(r+x),(r+y)))
         resizedImage = RectImage.resize((300,300),Image.ANTIALIAS)
         resizedImage.save(icon.icon_pic.path)
 
         return icon
+
+class comment_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(comment_form, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+    class Meta:
+        model = userComment
+        fields = (
+            'comment',
+        )

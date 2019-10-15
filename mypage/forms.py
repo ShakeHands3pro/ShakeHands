@@ -4,7 +4,7 @@ from .models import (
     club, openQ, openQ_ans,
     jobHunting_requestment, jobHunting_startTime,
     internshipRecommendation, prospectiveEmployer,
-    myfriend
+    myfriend, jobHunting_policy
 )
 
 User=get_user_model()
@@ -142,3 +142,11 @@ class myfriend_form(forms.ModelForm):
         print(self)
         return friend
 
+class jobHunting_policy_form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(jobHunting_policy_form, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+    class Meta:
+        model = jobHunting_policy
+        fields = ('policy',)
