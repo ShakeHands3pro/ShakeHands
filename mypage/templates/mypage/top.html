@@ -1,6 +1,65 @@
-{% extends "accounts/base.html" %}
+{% extends 'accounts/base.html' %}
+{% load utility %}
 {% block content %}
-<p>
-    Mypage<br>
-</p>
+<div>
+    <div class ="news">
+        <h3>新着フォロワー</h3>
+        <div class="overflow-auto row d-flex align-items-center" style="width:80vw; height:25vw; border: 1px solid #444444">
+            {% for user in followed %}
+            {% with id=user.user %}
+            <div class="overflow-hidden row d-flex align-items-center container-fluid">
+                <a href="{% url 'mypage:profile' id=id %}"></a>
+                <div class = "col-3">
+                    {% if id|get_iconpic_url %}
+                    <img src="{{ id|get_iconpic_url }}" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class ="col-9">
+                    <div class=profile_txt>
+                        <h5>{{ id|get_displayname }}</h5>
+                        <p>{{ id|get_course }}学科 {{ id|get_graduationyear }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>     
+    </div>
+    <div class = "news">
+        <h3>新着質問</h3>
+        <div class="overflow-auto" style="width:80vw; height:25vw; border: 1px solid #444444">
+            {% for qbox in I_unanswered_qBox %}
+            <div class="overflow-hidden row d-flex align-items-center container-fluid">
+                <a href="{% url 'questionBoxes:answer' id=qbox.pk %}"></a>
+                <div>
+                    <p>{{ qbox.questionner.id|get_course }}学科 {{ qbox.questionner.id|get_graduationyear }} {{ qbox.questionner.id|get_displayname }}</p>
+                </div>
+                <div>
+                    <p>{{ qbox.created_at|date:"Y-m-d" }}</p>
+                </div>
+                <div>
+                    <p>{{ qbox.text }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class ="news">
+        <h3>新着アドレス交換申請</h3>  
+        <div class="overflow-auto" style="width:80vw; height:25vw; border: 1px solid #444444">
+            {% for addexc in I_unanswered_addExc %}
+            <div class="overflow-hidden row d-flex align-items-center container-fluid">
+                <a href="{% url 'addexchange:detail' id=addexc.pk %}"></a>
+                <div class="col-12">
+                    <p>{{ addexc.questioner.id|get_course }}学科 {{ addexc.questioner.id|get_graduationyear }} {{ addexc.questioner.id|get_displayname }}</p>
+                    <p>{{ addexc.request_time|date:"Y-m-d" }}</p>
+                </div>
+                <div class="col-12">
+                    <p>{{ addexc.text }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>  
+    </div>
+</div>
 {% endblock %}

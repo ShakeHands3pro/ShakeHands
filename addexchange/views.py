@@ -26,8 +26,13 @@ class addExc(LoginRequiredMixin,generic.UpdateView):
         login_user=self.request.user
         to_user=User.objects.get(id=self.kwargs['id'])#相手のユーザー
         try:
-            obj=addressExchange.filter(questioner=login_user,answerer=to_user)
-            #状態が拒否の時の場合を書き足す、リダイレクトさせる
+            objlist=addressExchange.objects.filter(questioner=login_user,answerer=to_user)
+            if len(objlist) == 0:
+                obj=addressExchange()
+                obj.questioner=login_user
+                obj.answerer=to_user
+            else:
+                obj=objlist[0]
         except:
             obj=addressExchange()
             obj.questioner=login_user

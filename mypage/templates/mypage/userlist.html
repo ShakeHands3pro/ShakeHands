@@ -10,7 +10,7 @@
             <div class ="col-9">
                 <div class=profile_txt>
                     <a href="{% url 'mypage:profile' id=user.user.pk %}">{{ user.user.id|get_displayname }}</a>
-                    <a>{{ user.graduation_year }}年度卒業予定</a><br>
+                    <a>{{ user.graduation_year }}年度卒業</a><br>
                     <a>{{ user.get_course_display }}学科</a><br>
                 </div>
             </div>
