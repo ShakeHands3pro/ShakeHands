@@ -1,17 +1,23 @@
 {% extends "accounts/base.html" %}
 {% block content %}
+
+{% if not form.text %}
 <h2>アドレス交換申請フォーム</h2>
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    {% for field in form %}
     <div class="form-group">
-        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
-        {{ field }}
-        {{ field.errors }}
+        <label for="{{ form.text.id_for_label }}">{{ form.text.label_tag }}</label>
+        {{ form.text }}
+        {{ form.text.errors }}
     </div>
-    {% endfor %}
 
-    <button type="submit" class="btn btn-primary btn-lg">申請</button>
+    <button type="submit" class="btn btn-outline-info btn-lg">申請</button>
 </form>
+{% else %}
+<h2>アドレス交換申請内容</h2>
+<p>内容:</p>
+<p>{{ form.text.value }}</p>
+<p>申請日時: {{ form.request_time.value|date:"Y/m/d" }}</p>
+{% endif %}
 {% endblock %}

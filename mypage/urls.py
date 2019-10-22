@@ -31,5 +31,8 @@ urlpatterns = [
     #プロフィールページ
     path('profile/<uuid:id>',views.profilePage.as_view(),name='profile'),
     path('search/all',views.allUser_list.as_view(),name='alluser_list'),
+
+    #フォロー一覧
+    path('friends/', views.follower_list.as_view(), name='follower_list'),
     path('search/',views.Search.as_view(),name='searchuser'),
 ]

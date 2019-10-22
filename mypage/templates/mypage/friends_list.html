@@ -1,0 +1,79 @@
+{% extends 'accounts/base.html' %}
+{% load utility %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a href="#tab1" class="nav-link navbar-default active" data-toggle="tab">フォロー中</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab2" class="nav-link navbar-default" data-toggle="tab">フォロワー</a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab3" class="nav-link navbar-default" data-toggle="tab">相互フォロワー</a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div id="tab1" class="tab-pane active content_into_tab">
+        <!--Tab1の内容-->
+        {% for user in following %}
+        {% with id=user.friend %}
+        <div>
+            {% if icon_pic %}
+            <img src="{{id|get_iconpic_url}}" class="col-3">
+            {% endif %}
+            <div class ="col-9">
+                <div class=profile_txt>
+                    <a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a>
+                    <a>{{ id|get_graduationyear }}年度卒業</a><br>
+                    <a>{{ id|get_course }}学科</a><br>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+
+
+    <div id="tab2" class="tab-pane content_into_tab">
+        <!--Tab2の内容-->
+        {% for user in followed %}
+        {% with id=user.user %}
+        <div>
+            {% if icon_pic %}
+            <img src="{{id|get_iconpic_url}}" class="col-3">
+            {% endif %}
+            <div class ="col-9">
+                <div class=profile_txt>
+                    <a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a>
+                    <a>{{ id|get_graduationyear }}年度卒業</a><br>
+                    <a>{{ id|get_course }}学科</a><br>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+
+
+    <div id="tab3" class="tab-pane content_into_tab">
+        <!--Tab3の内容-->
+        {% for user in following_and_followed %}
+        {% with id=user.friend %}
+        <div>
+            {% if icon_pic %}
+            <img src="{{id|get_iconpic_url}}" class="col-3">
+            {% endif %}
+            <div class ="col-9">
+                <div class=profile_txt>
+                    <a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a>
+                    <a>{{ id|get_graduationyear }}年度卒業</a><br>
+                    <a>{{ id|get_course }}学科</a><br>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
