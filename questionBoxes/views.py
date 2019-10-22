@@ -4,11 +4,13 @@ from django.views import generic
 from django.forms import modelformset_factory
 from .models import Question,QIndex,Answer,Like
 from .forms import Question_form,Answer_form,Like_form
-from accounts.models import User
+from accounts.models import User 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dateutil.relativedelta import relativedelta
-import datetime
+import datetime 
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -154,3 +156,39 @@ class QBoxView(LoginRequiredMixin, generic.TemplateView):
     return HttpResponseRedirect(reverse_lazy('questions:question_detail', kwargs={'question_id': kwargs['question_id']}))
 
  """
+class Search_question(generic.ListView):
+    template_name='questionBoxes/search_questionbox.html'
+    model = Answer
+    #form=ProfileSearchForm
+    
+    def get_queryset(self):
+        qs = Answer.objects.all()
+        q_ans = self.request.GET.get('advice')
+        q_tag = self.request.GET.getlist('tag')
+        q_gakka=self.request.GET.get('gakka')
+
+        if not len(q_tag)==0 and not len(q_ans)==0 and not len(q_gakka)==0:
+            print("1")
+            qs = qs.filter(
+                Q(question__title__contains=q_ans)|Q(advice__contains=q_ans)|Q(question__text__contains=q_ans)|Q(question__index__in=q_tag)|Q(question__questionner__usersetting__course__contains=q_gakka)
+                )
+        elif not len(q_tag)==0 :
+            print("2")
+            qs= qs.filter(question__index__in=q_tag)
+        
+        elif q_ans is not None:
+            print("3")
+            qs = qs.filter(
+                Q(question__title__contains=q_ans)|Q(advice__contains=q_ans)|Q(question__text__contains=q_ans)
+                )
+            qs = qs.filter(question__questionner__usersetting__course__contains=q_gakka)
+
+        print(qs)
+        return qs
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ques= Question.objects.all()
+        context['ques'] = ques
+        
+        return context
