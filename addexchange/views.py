@@ -87,6 +87,7 @@ class confirm(LoginRequiredMixin,generic.TemplateView):
             model=addressExchange.objects.get(pk=request.POST.get('model_id',None))
         else:
             raise Http404
+        print(state_param)
         if state_param==0:
             model.approve_boolean=False
             model.save()

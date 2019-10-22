@@ -31,11 +31,11 @@
         <input type="hidden" name="model_id" value="{{ model.id }}">
         <button type="submit" class="btn btn-outline-secondary btn-sm">許可</button> 
     </form>   
-<form action="" method="POST"></form>
+<form action="" method="POST">
             {% csrf_token %}
             <input type="hidden" name="state" value="0">
             <input type="hidden" name="model_id" value="{{ model.id }}">
             <button type="submit" class="btn btn-outline-secondary btn-sm">拒否</button> 
-        </form>   
+</form>   
 {% endblock %}
 

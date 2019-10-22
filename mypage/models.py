@@ -80,6 +80,11 @@ class prospectiveEmployer(models.Model):
     occupation = models.ForeignKey(occupation, verbose_name='職種', on_delete=models.CASCADE)
     company_name = models.CharField("社名", max_length=50)
 
+class jobHunting_policy(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    policy = models.TextField("就活の軸", max_length=300, blank=False, null=True)
+    def __str__(self):
+        return self.policy
 
 
 

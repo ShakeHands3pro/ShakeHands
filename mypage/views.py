@@ -10,16 +10,16 @@ from .forms import(
     club_form, openQ_ans_addform, openQ_ans_updateform,
     jobHunting_startTime_form, jobHunting_requestment_form,
     internshipRec_form, prospectiveEmployer_form,
-    myfriend_form
+    myfriend_form, jobHunting_policy_form
 )
 from .models import(
     club, openQ_ans, openQ_ans,
     industry, occupation, prospectiveEmployer,
     jobHunting_startTime, jobHunting_requestment,
     internshipRecommendation,
-    myfriend
+    myfriend,jobHunting_policy
 )
-from accounts.models import(UserSetting)
+from accounts.models import(UserSetting,userComment)
 
 # Create your views here.
 class top(LoginRequiredMixin,generic.TemplateView):
@@ -175,12 +175,16 @@ class setting_jobHuntingInfo(LoginRequiredMixin, generic.TemplateView):
         login_user=self.request.user
         try:
             req = jobHunting_requestment.objects.get(user=login_user)
-        except :#jobHunting_requestment.models.DoesNotExist:
+        except :
             req = None
         try:
             start = jobHunting_startTime.objects.get(user=login_user)
-        except :#jobHunting_startTime.DoesNotExist:
+        except :
             start = None
+        try:
+            policy = jobHunting_policy.objects.get(user=login_user)
+        except:
+            policy = None
         try:
             internshipRec = internshipRecommendation.objects.filter(user=login_user)
         except internshipRecommendation.DoesNotExist:
@@ -189,9 +193,11 @@ class setting_jobHuntingInfo(LoginRequiredMixin, generic.TemplateView):
             prospectiveEmp = prospectiveEmployer.objects.filter(user=login_user)
         except prospectiveEmployer.DoesNotExist:
             prospectiveEmp = None
+        
         context.update({
             'jobReqestment':req,
             'jobHunting_StartTime':start,
+            'policy':policy,
             'internshipRec':internshipRec,
             'prospectiveEmployer':prospectiveEmp,
         })
@@ -232,6 +238,25 @@ class jobHunting_startTime_view(LoginRequiredMixin, generic.UpdateView):
         context = super(jobHunting_startTime_view, self).get_context_data(**kwargs)
         context["h2text"]="就活開始時期を登録する"
         return context
+
+class jobHuntingPolicy_view(LoginRequiredMixin, generic.UpdateView):
+    template_name='mypage/createOrUpdate.html'
+    form_class = jobHunting_policy_form
+    model = jobHunting_policy
+    success_url = reverse_lazy('mypage:jobhunting_setting')
+    def get_object(self):
+        login_user=self.request.user
+        try:
+            policy = jobHunting_policy.objects.get(user=login_user)
+        except:
+            policy  = jobHunting_policy()
+            policy.user = login_user
+        return policy
+    def get_context_data(self, **kwargs):
+        context = super(jobHuntingPolicy_view, self).get_context_data(**kwargs)
+        context["h2text"]="就活の軸を追加する"
+        return context
+
 
 class internshipRec_create(LoginRequiredMixin, generic.CreateView):
     model = internshipRecommendation
@@ -335,13 +360,17 @@ class profilePage(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         display_user = User.objects.get(id=self.kwargs['id'])
-        print(display_user)
 
         #ユーザ情報を取得する
         try:
             userDetail = UserSetting.objects.get(user=display_user)
-        except UserSetting.DoesNotExist:
+        except userDetail.DoesNotExist:
             UserDetail = None
+
+        try:
+            comment = userComment.objects.get(user=display_user)
+        except userComment.DoesNotExist:
+            comment = None
         
         #学生生活情報があれば取得する
         try:
@@ -363,6 +392,10 @@ class profilePage(LoginRequiredMixin, generic.TemplateView):
         except :#jobHunting_startTime.DoesNotExist:
             start = None
         try:
+            policy = jobHunting_policy.objects.get(user=display_user)
+        except:
+            policy = None
+        try:
             internshipRec = internshipRecommendation.objects.filter(user=display_user)
         except internshipRecommendation.DoesNotExist:
             internshipRec = None
@@ -373,6 +406,7 @@ class profilePage(LoginRequiredMixin, generic.TemplateView):
         follow_state=get_friendState(self.request.user, display_user)
         context.update({
             'display_user':display_user,
+            'userComment':comment,
             'display_name':get_display_name(display_user),
             'follow_state':follow_state,
             'followButton_txt':'フォロー解除' if follow_state <3 else 'フォロー' if follow_state<5 else '',
@@ -380,6 +414,7 @@ class profilePage(LoginRequiredMixin, generic.TemplateView):
             'club':myClub,
             'openQ':openQ_and_myans,
             'jobReqestment':req,
+            'policy':policy,
             'jobHunting_startTime':start,
             'internship_rec':internshipRec,
             'prospective_employer':prospectiveEmp,
@@ -409,10 +444,11 @@ class profilePage(LoginRequiredMixin, generic.TemplateView):
         return redirect('mypage:profile',id=display_user.pk)
 
 def get_display_name(user):
-    displayname = UserSetting.objects.get(user=user).display_name
-    if displayname:
+    try:
+        displayname = UserSetting.objects.get(user=user).display_name
         return displayname
-    return user.name
+    except:
+        return user.get_full_name()
 
 def get_friendState(login_user,theOther):
     is_follow=myfriend.objects.filter(user=login_user, friend=theOther)
