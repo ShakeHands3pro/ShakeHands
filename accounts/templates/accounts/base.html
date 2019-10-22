@@ -27,7 +27,7 @@
         <nav class="drawer-nav mydrawer_setting" role="navigation">
           <ul class="drawer-menu">
             <div class="drawer_top">
-                <h3>ShakeHands</h3>
+                <h3><a href="{% url 'mypage:top' %}" style="text-decoration: none; color: #d0eae8;">ShakeHands</a></h3>
             </div>
               {% if user.is_authenticated %}
               
@@ -60,6 +60,7 @@
                 </div>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'addexchange:list' %}">アドレス交換申請一覧</a></li>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'questionBoxes:list' %}">質問箱</a></li>
+              <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:follower_list' %}">フォロー一覧</a></li>
               <div class="dropdown-divider"></div>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'accounts:logout' %}">ログアウト</a></li>
               

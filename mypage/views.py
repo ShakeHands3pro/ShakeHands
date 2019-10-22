@@ -5,6 +5,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.forms import modelformset_factory
+from django.db.models import Prefetch
 from .forms import(
     club_form, openQ_ans_addform, openQ_ans_updateform,
     jobHunting_startTime_form, jobHunting_requestment_form,
@@ -18,13 +19,38 @@ from .models import(
     internshipRecommendation,
     myfriend,jobHunting_policy
 )
+from questionBoxes.models import Question
+from addexchange.models import addressExchange
 from accounts.models import(UserSetting,userComment)
+import datetime
+from dateutil.relativedelta import relativedelta
+User = get_user_model()
 
 # Create your views here.
+"""
+新規フォロワーを一覧表示する
+届いた質問箱の未回答のものを一覧表示する
+届いたアドレス交換申請の未返答のものを一覧表示する
+"""
 class top(LoginRequiredMixin,generic.TemplateView):
     template_name = 'mypage/top.html'
+    def get_context_data(self, **kwargs):
+        login_user = self.request.user
+        today=datetime.date.today()+relativedelta(days=1)
+        threemonths_ago=today-relativedelta(months=3)
+        context = super().get_context_data(**kwargs)
+        followed = myfriend.objects.values('user').filter(friend=login_user).order_by('id')
+        I_unanswered_qBox = Question.objects.filter(answerer=login_user, status=1).filter(created_at__range=(threemonths_ago,today)).order_by('created_at')
+        I_unanswered_addExc = addressExchange.objects.filter(answerer=login_user).filter(approve_boolean=None).filter(request_time__range=(threemonths_ago, today)).order_by('request_time')
+        context.update({
+            'followed':followed,
+            'I_unanswered_qBox':I_unanswered_qBox,
+            'I_unanswered_addExc':I_unanswered_addExc,
+        })
+        print(context)
+        return context
 
-User = get_user_model()
+
 
 
 """
@@ -477,3 +503,21 @@ class allUser_list(LoginRequiredMixin, generic.TemplateView):
         return super(allUser_list, self).get(request, *args, **kwargs)
 
         
+class follower_list(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'mypage/friends_list.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        login_user = self.request.user
+        following = myfriend.objects.values('friend').filter(user=login_user)
+        followed = myfriend.objects.values('user').filter(friend=login_user)
+        following_and_followed = following.intersection(followed)
+        context.update({
+            'following':following,
+            'followed':followed,
+            'following_and_followed':following_and_followed,
+        })
+        print(context)
+        return context
+    def get(self, request, *args, **kwargs):
+        return super(follower_list, self).get(request, *args, **kwargs)
+      
