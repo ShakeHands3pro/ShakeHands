@@ -34,4 +34,5 @@ urlpatterns = [
 
     #フォロー一覧
     path('friends/', views.follower_list.as_view(), name='follower_list'),
+    path('search/',views.Search.as_view(),name='searchuser'),
 ]

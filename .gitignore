@@ -4,3 +4,4 @@
 __init__.py
 .gitignore
 
+db.sqlite3

@@ -58,6 +58,18 @@
                       </ul>
                   </div>                
                 </div>
+                <div class="card">
+                  <div class="mycard-header " role="tab" id="collapseListGroupHeading1">
+                    <a href="#collapseListGroup3" class="collapsed text-body dropdown-toggle" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup3" style="display: block">検索</a>
+                  </div><!-- /.card-header -->  
+                  <div class="collapse" role="tabpanel" id="collapseListGroup3" aria-labelledby="collapseListGroupHeading3" aria-expanded="false">
+                      <ul class="list-group list-group-flush">
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:searchuser' %}">ユーザー検索</a></li>
+                        <li><a class="drawer-dropdown-menu-item" href="{% url 'questionBoxes:searchquestion' %}">質問検索</a></li>
+                        
+                      </ul>
+                  </div>                
+                </div>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'addexchange:list' %}">アドレス交換申請一覧</a></li>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'questionBoxes:list' %}">質問箱</a></li>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:follower_list' %}">フォロー一覧</a></li>

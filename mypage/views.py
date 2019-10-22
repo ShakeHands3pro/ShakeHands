@@ -5,7 +5,6 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.forms import modelformset_factory
-from django.db.models import Prefetch
 from .forms import(
     club_form, openQ_ans_addform, openQ_ans_updateform,
     jobHunting_startTime_form, jobHunting_requestment_form,
@@ -43,7 +42,7 @@ class top(LoginRequiredMixin,generic.TemplateView):
         I_unanswered_qBox = Question.objects.filter(answerer=login_user, status=1).filter(created_at__range=(threemonths_ago,today)).order_by('created_at')
         I_unanswered_addExc = addressExchange.objects.filter(answerer=login_user).filter(approve_boolean=None).filter(request_time__range=(threemonths_ago, today)).order_by('request_time')
         context.update({
-            'followed':followed,
+':followed,
             'I_unanswered_qBox':I_unanswered_qBox,
             'I_unanswered_addExc':I_unanswered_addExc,
         })
@@ -521,3 +520,22 @@ class follower_list(LoginRequiredMixin, generic.TemplateView):
     def get(self, request, *args, **kwargs):
         return super(follower_list, self).get(request, *args, **kwargs)
       
+class Search(generic.ListView):
+    template_name='mypage/search.html'
+    model = UserSetting
+    #form=ProfileSearchForm
+    
+    def get_queryset(self):
+        qs = UserSetting.objects.all()
+        q_name = self.request.GET.get('course')
+        if q_name is not None:
+            qs = qs.filter(course__contains=q_name)
+        print(qs)
+        return qs
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        users= UserSetting.objects.all()
+        context['users'] = users
+        
+        return context

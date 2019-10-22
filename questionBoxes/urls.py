@@ -9,5 +9,6 @@ urlpatterns = [
     path('create/<uuid:id>', views.CreateQuestionView.as_view(), name='create'),
     path('answer/<uuid:id>', views.AnswerView.as_view(), name='answer'),
     path('list/',views.list.as_view(),name='list'),
-    path('detail/<uuid:id>', views.QBoxView.as_view(),name='detail')
+    path('detail/<uuid:id>', views.QBoxView.as_view(),name='detail'),
+    path('search_questionbox/',views.Search_question.as_view(),name='searchquestion')
 ]
