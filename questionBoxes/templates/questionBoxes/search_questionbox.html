@@ -1,0 +1,56 @@
+{% extends 'accounts/base.html' %}
+{% load utility %}  
+{% load custom_filters %}
+{% block content %}
+    <form method="get" action="" name="filter_form">
+        <legend>質問検索</legend>
+    <div>
+        <p>タグ：
+        <label><input type="checkbox" id="filter_tag" name="tag" value="1">ES</label>
+        <label><input type="checkbox" id="filter_tag" name="tag" value="2">Webテスト</label>
+        <label><input type="checkbox" id="filter_tag" name="tag" value="3">自己分析</label>
+        </p>   
+    </div>
+    <div>
+    <span>質問者の学科</span>
+        <select name="gakka" >
+        <option value ="">--------<option>
+        <option value="2">国際関係学科</option>
+        <option value="3">多文化・国際協力学科</option>
+        <option value="4">数学科</option>
+        <option value="5">情報科学科</option>
+        <option value="6">総合政策学科</option>
+        </select>
+    </div>
+    <br>
+
+    <div>
+    {{ form }}
+        <span>質問内容:</span>
+        <input type="search" id="filter_ans"
+            name="advice" 
+            placeholder="フリーワード">
+        
+    </div>
+    <br>
+     <button id="filter">絞り込み</button>
+    <div id="main">
+    <br>
+
+    <h3>結果</h3>
+    
+        <table>
+            
+            {% for ques in object_list %}
+                <p class="card-text">
+                    質問タイトル:{{ques.question.title}}
+                    <br>
+                    質問内容:{{ques.question.text}}
+                    <br>
+                    回答:{{ques.advice}}
+                </p>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% endblock %}
