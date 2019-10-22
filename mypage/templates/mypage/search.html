@@ -1,0 +1,39 @@
+{% extends 'accounts/base.html' %}
+{% load utility %}  
+{% load custom_filters %}
+{% block content %}
+    <form method="get" action="" name="filter_form">
+        <legend>ユーザー検索</legend>
+        <div>
+        {% comment %} <input type="search" autocomplete="on"  id="filter_name" > {% endcomment %}
+        <span>学科</span>
+        <select name="course">
+        <option value ="">--------<option>
+        <option value="2">国際関係学科</option>
+        <option value="3">多文化・国際協力学科</option>
+        <option value="4">数学科</option>
+        <option value="5">情報科学科</option>
+        <option value="6">総合政策学科</option>
+        </select>
+        <button id="filter">絞り込み</button>
+        
+        </div>
+    
+    
+        
+            
+        <div id="main">
+        <h1>結果</h1>
+        <table>
+            
+            {% for user in object_list %}
+                <p class="card-text">
+                    卒業年度:{{ user.graduation_year  }} 
+                    学科:{{ user.get_course_display }}
+                    名前:{{ user.display_name }}
+                </p>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% endblock %}
