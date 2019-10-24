@@ -68,7 +68,6 @@ class UserSettingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['display_name'].required = False
-        self.fields['graduation_year'].validators=[validators.MaxLengthValidator(2)]
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
     class Meta:
@@ -81,7 +80,7 @@ class UserSettingForm(forms.ModelForm):
     def clean_graduation_year(self):
         graduation_year = self.cleaned_data['graduation_year']
         if(int(graduation_year)>=100):
-            raise forms.ValidationError('卒業年度は2桁までの数字で記入してください。')
+            raise forms.ValidationError('卒業年度は西暦の下二桁を入力してください。')
         return graduation_year
 
     
