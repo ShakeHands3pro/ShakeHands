@@ -117,14 +117,19 @@ class UserCreatesetting(generic.View):
                 user = User.objects.get(pk=user_pk)
             except User.DoesNotExist:
                 return HttpResponseBadRequest()
-            else:
-                if not user.is_active:#これに引っかかるはず
-                    user.is_active = True
-                    user.save()
-                    getform=form.save(commit=False)
-                    getform.user=user
-                    getform.save()
-                    return redirect('accounts:signup_complete')
+            if not user.is_active:#これに引っかかるはず
+                if not form.is_valid():
+                    return render(
+                        request,
+                        self.template_name,
+                        {'form':self.form_class(request.POST),}
+                    )
+                getform=form.save(commit=False)
+                user.is_active = True
+                user.save()
+                getform.user=user
+                getform.save()
+                return redirect('accounts:signup_complete')
         return HttpResponseBadRequest()
 
 
