@@ -22,7 +22,7 @@
     <div>
     <span>質問者の学科</span>
         <select name="gakka" >
-        <option value ="">--------<option>
+        <option value ="">--------</option>
         <option value="1">英語英文学科</option>
         <option value="2">国際関係学科</option>
         <option value="3">多文化・国際協力学科</option>
@@ -60,10 +60,22 @@
 
                 </p>
                 <a class="Link" href="{% url 'questionBoxes:detail' id=ques.question.pk %}"></a>
-                </div>
+            </div>
             {% endfor %}
         
         </table>
     </div>
+    
+    <!-- 前へ の部分 -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+    {% endif %}
 
+    <!-- 1/3 の部分 -->
+   {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+
+    <!-- 次へ の部分 -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">次へ</a>
+    {% endif %}
     {% endblock %}
