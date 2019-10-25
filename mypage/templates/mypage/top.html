@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="">
+<div class="all">
     <div class ="news">
         <h3>新着フォロワー</h3>
-        <div class="overflow-auto row d-flex align-items-center area-border">
+        <div class="overflow-auto area-border">
             {% for user in followed %}
             {% with id=user.user %}
             <div class="overflow-hidden row d-flex align-items-center container-fluid">

@@ -1,5 +1,16 @@
 .area-border{
     width:80vw; 
     height:25vw; 
-    border: 1px solid #d2e1e4;
+    max-width: 500px;
+    max-height: 400px;
+    border: 1px solid #9da8aa;
+}
+
+.news{
+    margin-top: 30px;
+}
+
+.all{
+    margin-right: 10vw;
+    margin-left: 10vw;
 }
