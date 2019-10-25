@@ -46,7 +46,6 @@ class top(LoginRequiredMixin,generic.TemplateView):
             'I_unanswered_qBox':I_unanswered_qBox,
             'I_unanswered_addExc':I_unanswered_addExc,
         })
-        print(context)
         return context
 
 
@@ -61,7 +60,6 @@ class settingUnivLifeInfo(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         login_user = self.request.user
         try:
-            print(login_user.pk)
             myClub = club.objects.filter(user=login_user)
         except club.DoesNotExist:
             myClub = None
@@ -443,11 +441,9 @@ class profilePage(LoginRequiredMixin, generic.TemplateView):
             'internship_rec':internshipRec,
             'prospective_employer':prospectiveEmp,
         })
-        print(follow_state)
         return context
     def post(self, request, *args, **kwargs):
         followstate_changeParam = int(request.POST.get('followstate_ChangeParam',None))
-        print("followstate_changeParamは"+str(followstate_changeParam))
         display_user = User.objects.get(id=self.kwargs['id'])
         if(followstate_changeParam <3):
             try:
@@ -515,7 +511,6 @@ class follower_list(LoginRequiredMixin, generic.TemplateView):
             'followed':followed,
             'following_and_followed':following_and_followed,
         })
-        print(context)
         return context
     def get(self, request, *args, **kwargs):
         return super(follower_list, self).get(request, *args, **kwargs)
