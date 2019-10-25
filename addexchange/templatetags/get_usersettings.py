@@ -23,7 +23,7 @@ def get_iconpic_url(id):
     user_setting = UserSetting.objects.get(user=user)
     if user_setting.icon_pic:
         return user_setting.icon_pic.url
-    return None
+    return "/static/img/noicons.jpg"
 
 @register.filter
 def get_course(id):
