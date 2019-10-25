@@ -1,6 +1,10 @@
 {% extends 'accounts/base.html' %}
 {% load utility %}  
 {% load custom_filters %}
+{% load static %}
+{% block class %}
+<link rel="stylesheet" href="{% static '/css/search_user.css' %}">
+{% endblock %}
 {% block content %}
     <form method="get" action="" name="filter_form">
         <legend>ユーザー検索</legend>
@@ -27,11 +31,16 @@
         <table>
             
             {% for user in object_list %}
-                <p class="card-text">
+            <div class="linklink">
+                <p class="card-text">                　　
+                　　<img src="{{user_detail.user.id|get_iconpic_url}}" class="col-3 img-fluid">
                     卒業年度:{{ user.graduation_year  }} 
+                    <br>
                     学科:{{ user.get_course_display }}
+                    <br>
                     名前:{{ user.display_name }}
                 </p>
+            </div>
             {% endfor %}
         </table>
     </div>
