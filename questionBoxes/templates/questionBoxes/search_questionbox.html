@@ -48,6 +48,7 @@
                     質問内容:{{ques.question.text}}
                     <br>
                     回答:{{ques.advice}}
+                    質問者：{{ques.question.questionner.id|get_course}}
                 </p>
             {% endfor %}
         </table>
