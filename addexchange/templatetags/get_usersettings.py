@@ -24,7 +24,7 @@ def get_iconpic_url(id):
     if user_setting.icon_pic:
         print(user_setting.icon_pic.url)
         return user_setting.icon_pic.url
-    return None
+    return "/static/img/noicons.jpg"
 
 @register.filter
 def get_course(id):
