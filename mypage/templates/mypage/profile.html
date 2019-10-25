@@ -8,9 +8,9 @@
 
 {% block content %}
 <div class ="profile_head row d-flex align-items-center">
-    {% if user_detail.icon_pic %}
-        <img src="{{user_detail.icon_pic.url}}" class="col-3 img-fluid">
-    {% endif %}
+   
+        <img src="{{user_detail.user.id|get_iconpic_url}}" class="col-3 img-fluid">
+    
     <div class ="col-9">
         <div class="row d-flex align-items-center container-fluid">
             <div class="col-6">
@@ -28,7 +28,8 @@
             {% endif %} 
             </div>              
         </div>  
-        <a>{{ userComment.comment }}</a>         
+        <a>{{ userComment.comment }}</a> 
+        ＜＞        
     </div> 
 </div>
 
