@@ -1,6 +1,10 @@
-{% extends 'accounts/base.html' %}
-{% load utility %}
+{% extends "accounts/base.html" %}
 
+{% load static %}
+{% load utility %}
+{% block class %}
+<link href="{% static 'css/friend_list.css' %}" rel="stylesheet">
+{% endblock %}
 {% block content %}
 <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -19,14 +23,24 @@
         {% for user in following %}
         {% with id=user.friend %}
         <div>
-            {% if icon_pic %}
-            <img src="{{id|get_iconpic_url}}" class="col-3">
-            {% endif %}
+            
             <div class ="col-9">
                 <div class=profile_txt>
-                    <a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a>
-                    <a>{{ id|get_graduationyear }}年度卒業</a><br>
-                    <a>{{ id|get_course }}学科</a><br>
+                    <table class=tbl-plof>
+                        <thead>
+                            <tr> 
+                                {% if icon_pic %}
+                                <img src="{{user_detail.user.id|get_iconpic_url}}">
+                                {% elif %}
+                                <p>画像なし</p>
+                                    {% endif %}
+                                </td>
+                                <td><a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a></td>
+                                <td><a>{{ id|get_graduationyear }}年度卒業</a><br>
+                                <a>{{ id|get_course }}</a></td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>

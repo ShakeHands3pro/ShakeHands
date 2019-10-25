@@ -1,0 +1,16 @@
+.tbl-plof td{
+    border: solid 1px #ccc;
+    padding: 10px;
+    width: 200px;
+}
+.tbl-plof tr:hover {
+    background-color: #f4fcfe;
+}
+td#img_pro{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    /* background-position: center; */
+    /* background-size: cover; */
+    /* background-image: url("addexchange/media/images/logp_plof.jpg"); */
+  }
