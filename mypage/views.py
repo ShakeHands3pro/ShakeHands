@@ -42,7 +42,7 @@ class top(LoginRequiredMixin,generic.TemplateView):
         I_unanswered_qBox = Question.objects.filter(answerer=login_user, status=1).filter(created_at__range=(threemonths_ago,today)).order_by('created_at')
         I_unanswered_addExc = addressExchange.objects.filter(answerer=login_user).filter(approve_boolean=None).filter(request_time__range=(threemonths_ago, today)).order_by('request_time')
         context.update({
-            ':followed,
+            'followed':followed,
             'I_unanswered_qBox':I_unanswered_qBox,
             'I_unanswered_addExc':I_unanswered_addExc,
         })

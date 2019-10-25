@@ -11,7 +11,6 @@ from dateutil.relativedelta import relativedelta
 import datetime 
 from django.db.models import Q
 
-
 # Create your views here.
 
 class CreateQuestionView(LoginRequiredMixin, generic.CreateView):
