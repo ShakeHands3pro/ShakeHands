@@ -1,7 +1,15 @@
 {% extends 'accounts/base.html' %}
 {% load utility %}  
 {% load custom_filters %}
+{% load static %}
+
+{% block class %}
+<link rel="stylesheet" href="{% static '/css/search_questionbox.css' %}">
+{% endblock %}
+
 {% block content %}
+
+
     <form method="get" action="" name="filter_form">
         <legend>質問検索</legend>
     <div>
@@ -14,7 +22,8 @@
     <div>
     <span>質問者の学科</span>
         <select name="gakka" >
-        <option value ="">--------<option>
+        <option value ="">--------</option>
+        <option value="1">英語英文学科</option>
         <option value="2">国際関係学科</option>
         <option value="3">多文化・国際協力学科</option>
         <option value="4">数学科</option>
@@ -38,20 +47,35 @@
     <br>
 
     <h3>結果</h3>
-    
-        <table>
-            
+        <table　>
             {% for ques in object_list %}
+            <div class ="questionLink">
                 <p class="card-text">
                     質問タイトル:{{ques.question.title}}
                     <br>
-                    質問内容:{{ques.question.text}}
+                    質問日時：{{ques.question.created_at}}
                     <br>
-                    回答:{{ques.advice}}
+                    
                     質問者：{{ques.question.questionner.id|get_course}}
+
                 </p>
+                <a class="Link" href="{% url 'questionBoxes:detail' id=ques.question.pk %}"></a>
+            </div>
             {% endfor %}
+        
         </table>
     </div>
+    
+    <!-- 前へ の部分 -->
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">前へ</a>
+    {% endif %}
 
+    <!-- 1/3 の部分 -->
+   {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+
+    <!-- 次へ の部分 -->
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">次へ</a>
+    {% endif %}
     {% endblock %}

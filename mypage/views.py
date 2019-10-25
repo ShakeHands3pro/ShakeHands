@@ -519,7 +519,7 @@ class Search(generic.ListView):
     template_name='mypage/search.html'
     model = UserSetting
     #form=ProfileSearchForm
-    
+    paginate_by = 10
     def get_queryset(self):
         qs = UserSetting.objects.all()
         q_name = self.request.GET.get('course')
