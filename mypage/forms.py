@@ -139,7 +139,6 @@ class myfriend_form(forms.ModelForm):
         )
     def save(self):
         friend = super(myfriend_form,self).save()
-        print(self)
         return friend
 
 class jobHunting_policy_form(forms.ModelForm):
