@@ -6,8 +6,7 @@
         <h3>新着フォロワー</h3>
         
         <div class="overflow-auto row d-flex align-items-center" style="widows: 8px; width:80vw; height:25vw; border: 1px solid #d2e1e4">
-            <!--以下のdiv styleの追加しました　明田-->
-            <div style="padding-left:1vw; padding-top:1vw; margin-left:5vw;"></div>
+           
             {% for user in followed %}
             {% with id=user.user %}
             <div class="overflow-hidden row d-flex align-items-center container-fluid">

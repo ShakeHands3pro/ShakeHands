@@ -13,12 +13,14 @@
     
     <div class ="col-9">
         <div class="row d-flex align-items-center container-fluid">
-            <div class="col-6">
+            <div class="col-9">
                 <h4>{{ display_name }}</h4>
-                <a>{{ user_detail.graduation_year }}年度卒</a><br>
-                <a>{{ user_detail.get_course_display }}学科</a><br>
+                
+                <a>{{ user_detail.graduation_year }}年度卒</a>
+                <a>{{ user_detail.get_course_display }}</a>
+            
             </div>
-            <div class="col-6">
+            <div class="col-3">
             {% if follow_state != 5%}
             <form action="" method="POST">
                 {% csrf_token %}
@@ -27,9 +29,10 @@
             </form>     
             {% endif %} 
             </div>              
-        </div>  
-        <a>{{ userComment.comment }}</a> 
-        ＜＞        
+        </div>
+        <div class=comment>
+        <a>{{ userComment.comment }}</a>     
+        </div>
     </div> 
 </div>
 
@@ -76,8 +79,30 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>回答：</p>
-                                    {{ field.ans|linebreaksbr }}
+                                        
+                                        
+                                       
+        
+                                        <div id="accordion">
+                                          <div class="card" style="background-color: #ffffff;">
+                                            <div class="card-header" id="headingOne">
+                                              <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                  回答をみる
+                                                </button>
+                                              </h5>
+                                            </div>
+                                        
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                              <div class="card-body">
+                                                  {{ field.ans|linebreaksbr }}
+                                            
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    
+                                    
                                 </td>
                             </tr>
                         </table>
@@ -130,7 +155,7 @@
                     </table>
                 </div>
 
-                
+    
 
                 <div class ="sep_data">
                     <h4>おすすめのインターンシップ</h4>
