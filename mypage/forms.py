@@ -36,7 +36,7 @@ class openQ_ans_addform(forms.ModelForm):
     def get_q(self):
         login_user = self.user
         if openQ.objects.count() <= openQ_ans.objects.filter(user = login_user).count():
-            return openQ.objects.note()
+            return openQ.objects.none()
         return openQ.objects.all().exclude(openq_ans__user=login_user)
         
 

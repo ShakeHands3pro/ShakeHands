@@ -1,4 +1,5 @@
 {% extends "accounts/base.html" %}
+{% load utility %}
 {% block class %}
 <style>
   .content{
@@ -37,7 +38,10 @@
   {% endfor %}
 
   <h3>オープンクエスチョン</h3>
+  {% if openQ.count|isTooManyOpenQs %}
   <a href="{% url 'mypage:univlife_openQ_add' %}"><i class="fas fa-plus">add</i></a>
+  {% endif %}
+
   {% for field in openQ %}
   <table class="table">
     <tr>

@@ -3,6 +3,9 @@ from django.contrib.auth import get_user_model
 from accounts.models import(
     UserSetting
 )
+from mypage.models import(
+    openQ
+)
 User=get_user_model()
 register = template.Library()
  
@@ -43,3 +46,7 @@ def get_graduationyear(id):
 def get_email(id):
     user = User.objects.get(pk=id)
     return user.email
+
+@register.filter
+def isTooManyOpenQs(NumOfOpenQ_ans):
+    return openQ.objects.all().count() > NumOfOpenQ_ans
