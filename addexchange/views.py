@@ -25,19 +25,13 @@ class addExc(LoginRequiredMixin,generic.UpdateView):
     def get_object(self,**kwargs):
         login_user=self.request.user
         to_user=User.objects.get(id=self.kwargs['id'])#相手のユーザー
-        try:
-            objlist=addressExchange.objects.filter(questioner=login_user,answerer=to_user)
-            if len(objlist) == 0:
-                obj=addressExchange()
-                obj.questioner=login_user
-                obj.answerer=to_user
-            else:
-                obj=objlist[0]
-        except:
+        obj=addressExchange.objects.filter(questioner=login_user,answerer=to_user).first()
+        if(obj is None):
             obj=addressExchange()
             obj.questioner=login_user
             obj.answerer=to_user
         return obj
+    
 
 class addExchange_list(LoginRequiredMixin, generic.TemplateView):
     template_name='addexchange/list.html'
@@ -57,8 +51,6 @@ class addExchange_list(LoginRequiredMixin, generic.TemplateView):
             'accepted':accepted,
             'offered':offered,
         })
-        #print(addressExchange.objects.all())
-        #print(context)
         return context
 
 class detail(LoginRequiredMixin, generic.TemplateView):
@@ -92,7 +84,6 @@ class confirm(LoginRequiredMixin,generic.TemplateView):
             model=addressExchange.objects.get(pk=request.POST.get('model_id',None))
         else:
             raise Http404
-        print(state_param)
         if state_param==0:
             model.approve_boolean=False
             model.save()

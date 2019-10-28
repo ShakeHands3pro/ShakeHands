@@ -1,7 +1,6 @@
 {% extends "accounts/base.html" %}
 {% block content %}
-
-{% if not form.text %}
+{% if form.text.value|length_is:"0" %}
 <h2>アドレス交換申請フォーム</h2>
 <form action="" method="POST">
     {% csrf_token %}
@@ -14,10 +13,12 @@
 
     <button type="submit" class="btn btn-outline-info btn-lg">申請</button>
 </form>
+
 {% else %}
 <h2>アドレス交換申請内容</h2>
 <p>内容:</p>
 <p>{{ form.text.value }}</p>
 <p>申請日時: {{ form.request_time.value|date:"Y/m/d" }}</p>
 {% endif %}
+
 {% endblock %}
