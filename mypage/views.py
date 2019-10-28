@@ -492,7 +492,8 @@ class allUser_list(LoginRequiredMixin, generic.TemplateView):
         usersettings=UserSetting.objects.exclude(user=self.request.user)
         context.update({
             'users':usersettings,
-        })       
+        })
+        print(context)      
         return context
     def get(self, request, *args, **kwargs):
         return super(allUser_list, self).get(request, *args, **kwargs)
