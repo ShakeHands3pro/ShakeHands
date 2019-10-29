@@ -1,0 +1,31 @@
+
+.nav-item{
+    width: 100px;
+    font-size: 10px;
+}
+.tbl-plof{
+    font-size: 12px;
+    border: #58c7e0;
+    margin-left: 30px;
+    }
+       
+.tbl-plof td{  
+    text-align: center;
+    
+}
+
+
+.tbl-plof tr:hover {
+    background-color: #d9eaee;  
+}
+
+img{
+    line-height: 2.0em;
+    width: 85px;
+    margin: 10px;
+}
+
+.tbl-plof a{
+    text-decoration: none;  
+} 
+

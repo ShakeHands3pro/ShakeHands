@@ -22,6 +22,7 @@ def get_iconpic_url(id):
     user = User.objects.get(pk=id)
     user_setting = UserSetting.objects.get(user=user)
     if user_setting.icon_pic:
+        print(user_setting.icon_pic.url)
         return user_setting.icon_pic.url
     return "/static/img/noicons.jpg"
 

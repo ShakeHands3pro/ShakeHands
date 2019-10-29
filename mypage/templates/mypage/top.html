@@ -43,18 +43,27 @@
             <p>・新着情報はまだありません</p>
             {% endif %}
             {% for qbox in I_unanswered_qBox %}
-            <div class="overflow-hidden row d-flex align-items-center container-fluid">
-                <a href="{% url 'questionBoxes:answer' id=qbox.pk %}"></a>
-                <div>
-                    <p>{{ qbox.questionner.id|get_course }}学科 {{ qbox.questionner.id|get_graduationyear }} {{ qbox.questionner.id|get_displayname }}</p>
+                <div class="overflow-hidden row d-flex align-items-center container-fluid">
+                    <a href="{% url 'questionBoxes:answer' id=qbox.pk %}"></a>
+                    <div class="col-12">
+                    <div class="linklink">
+                
+                        <div>  
+                            <p>{{ qbox.questionner.id|get_course }}学科 {{ qbox.questionner.id|get_graduationyear }} {{ qbox.questionner.id|get_displayname }}</p>
+                        </div>
+                
+                        <div>
+                            <p>質問日時：{{ qbox.created_at|date:"Y-m-d" }}</p>
+                        </div>
+                        <div>
+                            <p>タイトル：{{ qbox.title}}</p>
+                        </div>
+                        <a class="Link"  href="{% url 'questionBoxes:answer' id=qbox.id %}"></a>
+                    </div>
+                    </div>
+
+            
                 </div>
-                <div>
-                    <p>{{ qbox.created_at|date:"Y-m-d" }}</p>
-                </div>
-                <div>
-                    <p>{{ qbox.text }}</p>
-                </div>
-            </div>
             {% endfor %}
         </div>
     </div>
@@ -67,13 +76,19 @@
             {% for addexc in I_unanswered_addExc %}
             <div class="overflow-hidden row d-flex align-items-center container-fluid">
                 <a href="{% url 'addexchange:detail' id=addexc.pk %}"></a>
-                <div class="col-12">
-                    <p>{{ addexc.questioner.id|get_course }}学科 {{ addexc.questioner.id|get_graduationyear }} {{ addexc.questioner.id|get_displayname }}</p>
-                    <p>{{ addexc.request_time|date:"Y-m-d" }}</p>
-                </div>
-                <div class="col-12">
-                    <p>{{ addexc.text }}</p>
-                </div>
+                
+                    <div class="col-12">
+                    
+                        <div class ="linklink">
+                            {{ addexc.questioner.id|get_course }}学科  {{ addexc.questioner.id|get_graduationyear }} {{ addexc.questioner.id|get_displayname }}
+                            <br>
+                            申請日時: {{ addexc.request_time|date:"Y-m-d" }}
+                            <a class="Link" href="{% url 'addexchange:confirm' id=addexc.pk %}"></a>
+                        </div>
+                        
+                    </div>
+                
+                   
             </div>
             {% endfor %}
         </div>  
