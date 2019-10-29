@@ -83,27 +83,18 @@ class QBoxView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         question_pk = self.kwargs['id']
         question = get_object_or_404(Question, id=question_pk)
-        try:
-            ans = Answer.objects.filter(question=question)
-        except Answer.DoesNotExist:
-            ans = None
-        
-        if ans != None:
-            try:
-                like_count = Like.objects.filter(answer=ans[0]).count()
-            except Like.DoesNotExist:
-                like_count = 0
-            try:
-                like_status = True if Like.objects.filter(answer=ans[0], user=self.request.user).count()!=0 else False
-            except Like.DoesNotExist:
-                like_status = False
+
+        ans = Answer.objects.filter(question=question)
+        if not len(ans)==0:
+            like_count = Like.objects.filter(answer=ans[0]).count()
+            like_status = True if Like.objects.filter(answer=ans[0], user=self.request.user).count()!=0 else False
         else:
-            lile_count=0
+            like_count = 0
             like_status = False
 
         context.update({
             'question':question,
-            'answer':ans[0],
+            'answer':None if len(ans)==0 else ans[0],
             'like_count':like_count,
             'like_status':like_status,
         })

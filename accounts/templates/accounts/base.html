@@ -14,6 +14,10 @@
     {% block class %}{% endblock %}
 
     <script src="https://kit.fontawesome.com/d3c761ab9c.js" crossorigin="anonymous"></script>
+    
+    <link rel="icon" href="{% static 'img/noicons.jpg' %}">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+   
 
     <title>ShakeHands</title>
 </head>
@@ -30,9 +34,7 @@
                 <h3><a href="{% url 'mypage:top' %}" style="text-decoration: none; color: #d0eae8;">ShakeHands</a></h3>
             </div>
               {% if user.is_authenticated %}
-              
-              <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:alluser_list' %}">ユーザ一覧</a></li>
-              
+                            
               <div class="card">
                 <div class="mycard-header " role="tab" id="collapseListGroupHeading1">
                   <a href="#collapseListGroup1" class="collapsed text-body dropdown-toggle" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup1" style="display: block;">ユーザ設定</a>
@@ -71,7 +73,7 @@
                   </div>                
                 </div>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'addexchange:list' %}">アドレス交換申請一覧</a></li>
-              <li><a class="drawer-dropdown-menu-item" href="{% url 'questionBoxes:list' %}">質問箱</a></li>
+              <li><a class="drawer-dropdown-menu-item" href="{% url 'questionBoxes:list' %}">質問箱一覧</a></li>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'mypage:follower_list' %}">フォロー一覧</a></li>
               <div class="dropdown-divider"></div>
               <li><a class="drawer-dropdown-menu-item" href="{% url 'accounts:logout' %}">ログアウト</a></li>

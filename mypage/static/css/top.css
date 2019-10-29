@@ -1,9 +1,9 @@
 .area-border{
     width:80vw; 
-    height:25vw; 
-    max-width: 500px;
-    max-height: 400px;
+    max-width: 800px;
+    max-height: 200px;
     border: 1px solid #9da8aa;
+    border-radius: 15px;
 }
 
 .news{

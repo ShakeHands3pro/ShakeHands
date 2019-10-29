@@ -1,31 +1,39 @@
 {% extends "accounts/base.html" %}
+{% load static %}
+
+{% block class %}
+<link href="{% static 'css/table.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<h3>質問内容</h3>
+<div class="content">
+    <h3>質問内容</h3>
     <div class="form-group">
         {{ question.text|linebreaksbr  }}
     </div>
-<h3>回答</h3>
-{% if answer is not None %}
-    <div class="form-group">
-        {{ answer.advice|linebreaksbr  }}
-    </div>
-{% else %}
-    <p>まだ回答がありません</p>
-{% endif %}
-
-<div>
-    {% if answer is not None %} 
-    <form action="" method="POST">
-            {% csrf_token %}
-            
-            {% if like_status is True %}
-            <input type="hidden" name="status" value="1">
-            <button type="submit" class="btn btn-outline-info btn-sm"><i class="fas fa-thumbs-up">{{like_count}} good!</i></button>
-            {% else %}
-            <input type="hidden" name="status" value="0">
-            <button type="submit" class="btn btn-outline-secondary btn-sm"><i class="fas fa-thumbs-up">{{like_count}}</i></button>
-            {% endif %}
-        </form>
+    <h3>回答</h3>
+    {% if answer is not None %}
+        <div class="form-group">
+            {{ answer.advice|linebreaksbr  }}
+        </div>
+    {% else %}
+        <p>まだ回答がありません</p>
     {% endif %}
+    
+    <div>
+        {% if answer is not None %} 
+        <form action="" method="POST">
+                {% csrf_token %}
+                
+                {% if like_status is True %}
+                <input type="hidden" name="status" value="1">
+                <button type="submit" class="btn btn-outline-info btn-sm"><i class="fas fa-thumbs-up">{{like_count}} good!</i></button>
+                {% else %}
+                <input type="hidden" name="status" value="0">
+                <button type="submit" class="btn btn-outline-secondary btn-sm"><i class="fas fa-thumbs-up">{{like_count}}</i></button>
+                {% endif %}
+            </form>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

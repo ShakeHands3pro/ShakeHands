@@ -42,15 +42,9 @@ class UserCreateForm(UserCreationForm):
         #もし重複するアクティブでない(仮登録だけして本登録をしないまま、登録フォームが期限切れしたなどした残骸を削除する)
         email = self.cleaned_data['email']
         User.objects.filter(email=email, is_active=False).delete()
+        if not(email.endswith('@gm.tsuda.ac.jp')):
+            raise forms.ValidationError("@tsuda.ac.jpのメールアドレスを指定してください。")
         return email
-    """
-    #正規表現を使って津田以外のメアドで登録しようとした人を弾くメソッドが必要
-    def clean_email(self):
-        emal = self.cleaned_data['email']
-        if(!　　　[emailがtsuda.ac.jp]　　　): <--ここ直す
-            raise forms.ValidationError("Allow @tsuda.ac.jp only.")
-        return email
-    """
 
 
 

@@ -1,13 +1,11 @@
 {% extends "accounts/base.html" %}
 {% load utility %}
+{% load static %}
+
 {% block class %}
-<style>
-  .content{
-    padding: 5vw;
-    padding-top: 5vw;
-  }
-</style>
+<link href="{% static 'css/table.css' %}" rel="stylesheet">
 {% endblock %}
+
 {% block content %}
 <div class="content">
   <h3>所属しているサークルや部活</h3>

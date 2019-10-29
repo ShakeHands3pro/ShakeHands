@@ -1,3 +1,7 @@
 .table{
-    margin: 5vw;
+    margin-bottom: 5vw;
 }
+.content{
+    padding: 5vw;
+    padding-top: 5vw;
+  }

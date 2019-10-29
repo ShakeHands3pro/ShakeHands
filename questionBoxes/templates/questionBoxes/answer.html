@@ -1,6 +1,13 @@
 {% extends "accounts/base.html" %}
+{% load static %}
+
+{% block class %}
+<link href="{% static 'css/table.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-<h2>質問内容</h2>
+<div class="content">
+    <h2>質問内容</h2>
     <div class="form-group">
         {{ advice|linebreaksbr  }}
         {{ form.errors }}
@@ -14,6 +21,8 @@
         {{ form.advice.errors }}
     </div>
     <br>
-    <button type="submit" class="btn btn-primary btn-lg">送信</button>
+    <button type="submit" class="btn btn-outline-info btn-lg">送信</button>
 </form>
+</div>
+
 {% endblock %}

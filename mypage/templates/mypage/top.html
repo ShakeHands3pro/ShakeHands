@@ -7,10 +7,15 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="all">
+    <h2>News</h2>
     <div class ="news">
         <h3>新着フォロワー</h3>
         <div class="overflow-auto area-border">
+            {% if followed.count is 0 %}
+            <p>新着情報はまだありません</p>
+            {% endif %}
             {% for user in followed %}
             {% with id=user.user %}
             <div class="overflow-hidden row d-flex align-items-center container-fluid">
@@ -34,6 +39,9 @@
     <div class = "news">
         <h3>新着質問</h3>
         <div class="overflow-auto area-border">
+            {% if I_unanswered_qBox.count is 0 %}
+            <p>・新着情報はまだありません</p>
+            {% endif %}
             {% for qbox in I_unanswered_qBox %}
             <div class="overflow-hidden row d-flex align-items-center container-fluid">
                 <a href="{% url 'questionBoxes:answer' id=qbox.pk %}"></a>
@@ -53,6 +61,9 @@
     <div class ="news">
         <h3>新着アドレス交換申請</h3>  
         <div class="overflow-auto area-border">
+            {% if I_unanswered_addExc.count is 0 %}
+            <p>・新着情報はまだありません</p>
+            {% endif %}
             {% for addexc in I_unanswered_addExc %}
             <div class="overflow-hidden row d-flex align-items-center container-fluid">
                 <a href="{% url 'addexchange:detail' id=addexc.pk %}"></a>

@@ -2,7 +2,7 @@
 
 下記URLよりサイトにアクセスの上、パスワードの再設定を行ってください。
 
-本登録用URL
+パスワード再設定用URL
 {{ protocol }}://{{ domain }}{% url 'accounts:password_reset_confirm' uid token %}
 
 今後ともどうぞよろしくお願いいたします。
