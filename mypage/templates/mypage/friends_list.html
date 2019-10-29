@@ -14,7 +14,7 @@
         <a href="#tab2" class="nav-link navbar-default" data-toggle="tab">フォロワー</a>
     </li>
     <li class="nav-item">
-        <a href="#tab3" class="nav-link navbar-default" data-toggle="tab">相互フォロワー</a>
+        <a href="#tab3" class="nav-link navbar-default" data-toggle="tab">相互フォロー</a>
     </li>
 </ul>
 <div class="tab-content">
@@ -23,26 +23,18 @@
         {% for user in following %}
         {% with id=user.friend %}
         <div>
-            
-            <div class ="col-9">
-                <div class=profile_txt>
-                    <table class=tbl-plof>
-                        <thead>
-                            <tr> 
-                                {% if icon_pic %}
-                                <img src="{{user_detail.user.id|get_iconpic_url}}">
-                                {% elif %}
-                                <p>画像なし</p>
-                                    {% endif %}
-                                </td>
-                                <td><a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a></td>
-                                <td><a>{{ id|get_graduationyear }}年度卒業</a><br>
-                                <a>{{ id|get_course }}</a></td>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
+            <div class=profile_txt>
+                <table class=tbl-plof>
+                   <thead>
+                        <tr>    
+                            <td><a href="{% url 'mypage:profile' id=id %}" style="display:block;width:100%;height:100%;"><img src="{{id|get_iconpic_url}}"></a></td>
+                            <td id="name_f"><a href="{% url 'mypage:profile' id=id%}" style="font-size: 15px;" >{{ id|get_displayname }}</a><br>
+                            <a href="{% url 'mypage:profile' id=id %}" >　{{ id|get_graduationyear }}年度卒業</a><br>
+                            <a href="{% url 'mypage:profile' id=id %}" >　{{ id|get_course }}</a></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>    
         </div>
         {% endwith %}
         {% endfor %}
@@ -59,9 +51,12 @@
             {% endif %}
             <div class ="col-9">
                 <div class=profile_txt>
-                    <a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a>
-                    <a>{{ id|get_graduationyear }}年度卒業</a><br>
-                    <a>{{ id|get_course }}学科</a><br>
+                    <table class=tbl-plof>
+                        <td><a href="{% url 'mypage:profile' id=id %}" style="display:block;width:100%;height:100%;"><img src="{{id|get_iconpic_url}}"></a></td>
+                        <td><a href="{% url 'mypage:profile' id=id %}" style="font-size: 15px;">{{ id|get_displayname }}</a><br>
+                        <a href="{% url 'mypage:profile' id=id %}">　{{ id|get_graduationyear }}年度卒業</a><br>
+                        <a href="{% url 'mypage:profile' id=id %}">　{{ id|get_course }}</a></td>
+                    </table>
                 </div>
             </div>
         </div>
@@ -80,9 +75,12 @@
             {% endif %}
             <div class ="col-9">
                 <div class=profile_txt>
-                    <a href="{% url 'mypage:profile' id=id %}">{{ id|get_displayname }}</a>
-                    <a>{{ id|get_graduationyear }}年度卒業</a><br>
-                    <a>{{ id|get_course }}学科</a><br>
+                    <table class=tbl-plof>
+                        <td><a href="{% url 'mypage:profile' id=id %}" style="display:block;width:100%;height:100%;"><img src="{{id|get_iconpic_url}}"></a></td>
+                        <td><a href="{% url 'mypage:profile' id=id %}" style="font-size: 15px;">{{ id|get_displayname }}</a><br>
+                        <a href="{% url 'mypage:profile' id=id %}" >　{{ id|get_graduationyear }}年度卒業</a><br>
+                        <a href="{% url 'mypage:profile' id=id %}" >　{{ id|get_course }}</a></td>
+                    </table>
                 </div>
             </div>
         </div>

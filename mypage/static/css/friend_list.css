@@ -1,16 +1,31 @@
-.tbl-plof td{
-    border: solid 1px #ccc;
-    padding: 10px;
-    width: 200px;
-}
-.tbl-plof tr:hover {
-    background-color: #f4fcfe;
-}
-td#img_pro{
-    display: inline-block;
+
+.nav-item{
     width: 100px;
-    height: 100px;
-    /* background-position: center; */
-    /* background-size: cover; */
-    /* background-image: url("addexchange/media/images/logp_plof.jpg"); */
-  }
+    font-size: 10px;
+}
+.tbl-plof{
+    font-size: 12px;
+    border: #58c7e0;
+    margin-left: 30px;
+    }
+       
+.tbl-plof td{  
+    text-align: center;
+    
+}
+
+
+.tbl-plof tr:hover {
+    background-color: #d9eaee;  
+}
+
+img{
+    line-height: 2.0em;
+    width: 85px;
+    margin: 10px;
+}
+
+.tbl-plof a{
+    text-decoration: none;  
+} 
+
