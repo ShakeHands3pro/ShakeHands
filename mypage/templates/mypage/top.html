@@ -14,7 +14,7 @@
         <h3>新着フォロワー</h3>
         <div class="overflow-auto area-border">
             {% if followed.count is 0 %}
-            <p>新着情報はまだありません</p>
+            <p>・新着情報はまだありません</p>
             {% endif %}
             {% for user in followed %}
             {% with id=user.user %}
