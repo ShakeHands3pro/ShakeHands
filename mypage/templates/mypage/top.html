@@ -18,19 +18,22 @@
             {% endif %}
             {% for user in followed %}
             {% with id=user.user %}
-            <div class="overflow-hidden row d-flex align-items-center container-fluid">
+            
+            <div class="overflow-hidden row d-flex align-items-center container-fluid linklink">
                 <a href="{% url 'mypage:profile' id=id %}"></a>
                 <div class = "col-3">
                     {% if id|get_iconpic_url %}
                     <img src="{{ id|get_iconpic_url }}" class="img-fluid">
                     {% endif %}
                 </div>
-                <div class ="col-9">
-                    <div class=profile_txt>
-                        <h5>{{ id|get_displayname }}</h5>
-                        <p>{{ id|get_course }}学科 {{ id|get_graduationyear }}</p>
-                    </div>
+                <div class ="col-9">    
+                        <div class=profile_txt>
+                            <h5>{{ id|get_displayname }}</h5>
+                            <p>{{ id|get_course }}学科 {{ id|get_graduationyear }}</p>
+                        </div>
+                        
                 </div>
+                <a class="Link" href="{% url 'mypage:profile' id=id %}"></a>
             </div>
             {% endwith %}
             {% endfor %}
