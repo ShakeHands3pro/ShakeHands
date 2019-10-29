@@ -7,28 +7,47 @@
 {% endblock %}
 
 {% block content %}
+<!--青色の所全体-->
 <div class ="profile_head row d-flex align-items-center">
-    {% if user_detail.icon_pic %}
-        <img src="{{user_detail.icon_pic.url}}" class="col-3 img-fluid">
-    {% endif %}
+   <!--アイコン画面　青色の左部分col-3-->
+        <img src="{{user_detail.user.id|get_iconpic_url}}" class="col-3 img-fluid">
+
+
+    <!--アイコン画面　青色の右部分col-9-->
     <div class ="col-9">
+
+        <!--名前とか年度卒とかの行-->
         <div class="row d-flex align-items-center container-fluid">
-            <div class="col-6">
+            <div class="col-9">
                 <h4>{{ display_name }}</h4>
+                
                 <a>{{ user_detail.graduation_year }}年度卒</a><br>
-                <a>{{ user_detail.get_course_display }}学科</a><br>
+                <a>{{ user_detail.get_course_display }}</a>
+            
             </div>
-            <div class="col-6">
+            
+               
+        </div>
+
+        <!--フォローボタンと空白の行-->
+        <div class="row container-fluid ">
+            <!--空白col-4-->
+            <div class="col-4"></div>
+            <!--フォローボタンcol-8-->
+            <div class="col-8 ">
             {% if follow_state != 5%}
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="followstate_ChangeParam" value="{{follow_state}}">
-                <button type="submit" class="btn btn-outline-secondary btn-sm">{{followButton_txt}}</button> 
-            </form>     
+                <form action="" method="POST">
+            {% csrf_token %}
+                    <input type="hidden" name="followstate_ChangeParam" value="{{follow_state}}">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm align-self-end">{{followButton_txt}}</button> 
+                 </form>     
             {% endif %} 
-            </div>              
-        </div>  
-        <a>{{ userComment.comment }}</a>         
+            </div>
+        </div>           
+    
+        <div class="userComment">
+        <a>{{ userComment.comment }}</a>    
+        </div>
     </div> 
 </div>
 
@@ -75,8 +94,27 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>回答：</p>
-                                    {{ field.ans|linebreaksbr }}
+                                        
+                                        <div id="accordion">
+                                          <div class="card" style="background-color: #ffffff;">
+                                            <div class="card-header" id="heading-{{ forloop.counter }}">
+                                              <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse-{{ forloop.counter }}">
+                                                  回答をみる
+                                                </button>
+                                              </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-{{ forloop.counter }}" class="collapse" aria-labelledby="heading-{{ forloop.counter }}" data-parent="#accordion">
+                                              <div class="card-body">
+                                                  {{ field.ans|linebreaksbr }}
+                                            
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    
+                                    
                                 </td>
                             </tr>
                         </table>
@@ -129,7 +167,7 @@
                     </table>
                 </div>
 
-                
+    
 
                 <div class ="sep_data">
                     <h4>おすすめのインターンシップ</h4>
@@ -191,8 +229,27 @@
 
             <div id="tab3" class="tab-pane content_into_tab">
                 <!--Tab３の内容-->
-            <a href="{% url 'questionBoxes:create' id=display_user.pk %}">質問する</a>
-            <a href="{% url 'addexchange:request' id=display_user.pk %}">アドレス交換申請する</a>
+                <div class="container-fluid">
+                    <div class="row justify-content-start">
+                        <div class="col-9">   
+                            <a href="{% url 'questionBoxes:create' id=display_user.pk %}"class="btn btn-sm btn-info" role="button">質問する</a><br>
+                        </div>
+                    </div>
+                    <div class="row justify-content-start">
+                        <div class="col-auto">
+                            <div class="alert alert-warning  mt-3 mb-5" role="alert">
+                            質問内容は、全てのユーザーに公開されるため、 回答者と質問者の本名を文章中に記載しないよう御願い致します。
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row justify-content-start">
+                        <div class="col-9">   
+                            <a href="{% url 'addexchange:request' id=display_user.pk %}"class="btn btn-sm btn-info" role="button">アドレス交換申請する</a><br>
+                        </div>
+                        
+                    </div>
+                </div>
+              
             </div>
 
         </div>   

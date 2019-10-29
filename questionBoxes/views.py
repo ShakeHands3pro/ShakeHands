@@ -159,9 +159,10 @@ class Search_question(generic.ListView):
     template_name='questionBoxes/search_questionbox.html'
     model = Answer
     #form=ProfileSearchForm
-    
+    paginate_by = 10
     def get_queryset(self):
         qs = Answer.objects.all()
+        
         q_ans = self.request.GET.get('advice')
         q_tag = self.request.GET.getlist('tag')
         q_gakka=self.request.GET.get('gakka')

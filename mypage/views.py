@@ -492,7 +492,8 @@ class allUser_list(LoginRequiredMixin, generic.TemplateView):
         usersettings=UserSetting.objects.exclude(user=self.request.user)
         context.update({
             'users':usersettings,
-        })       
+        })
+        print(context)      
         return context
     def get(self, request, *args, **kwargs):
         return super(allUser_list, self).get(request, *args, **kwargs)
@@ -519,7 +520,7 @@ class Search(generic.ListView):
     template_name='mypage/search.html'
     model = UserSetting
     #form=ProfileSearchForm
-    
+    paginate_by = 10
     def get_queryset(self):
         qs = UserSetting.objects.all()
         q_name = self.request.GET.get('course')
